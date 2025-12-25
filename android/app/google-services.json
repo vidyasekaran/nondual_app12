@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1043130529730",
+    "project_id": "gm-nondual-teaching",
+    "storage_bucket": "gm-nondual-teaching.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043130529730:android:bf669a09268f8c3ab2485b",
+        "android_client_info": {
+          "package_name": "com.example.gm_nondual_teaching"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAreAdMQiAqVBc0BmlgeV7nZe2C3suG_SU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043130529730:android:ac053bcd3b0203deb2485b",
+        "android_client_info": {
+          "package_name": "com.example.nondual_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAreAdMQiAqVBc0BmlgeV7nZe2C3suG_SU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
