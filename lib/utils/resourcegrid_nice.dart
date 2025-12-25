@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nondual_app/data/books_data.dart';
 import 'package:nondual_app/data/youtube_links.dart';
 import 'package:nondual_app/utils/showBookLinksBottomSheet.dart';
+import 'package:nondual_app/utils/showSocialMediaBottomSheet.dart';
 import 'package:nondual_app/utils/showWebLinksBottomSheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -51,6 +52,13 @@ class ResourceGrid extends StatelessWidget {
       },
 
       {
+        'icon': Icons.share_outlined,
+        'label': 'Social Media',
+        'onTap': (BuildContext context) {
+          showSocialMediaBottomSheet(context);
+        },
+      },
+      /*{
         'icon': Icons.groups,
         'label': 'Whatsapp',
         'onTap': (BuildContext context) {
@@ -65,7 +73,7 @@ class ResourceGrid extends StatelessWidget {
             'https://www.facebook.com/share/g/1B73HtPCbX/?mibextid=wwXIfr',
           );
         },
-      },
+      },*/
       {
         'icon': Icons.shopping_cart_outlined,
         'label': 'Buy Book',

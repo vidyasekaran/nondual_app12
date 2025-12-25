@@ -13,10 +13,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //backgroundColor: const Color(0xFFF2F2F2),
+      backgroundColor: const Color.fromARGB(255, 113, 151, 138),
+
+      //backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
         title: AdminLongPressTitle(),
         centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        // backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: const Color.fromARGB(255, 208, 177, 73),
         scrolledUnderElevation: 0,
         actions: [
           PopupMenuButton<String>(
@@ -47,23 +52,38 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            QuotePage(),
-            AboutGMPage(),
+      body: DefaultTextStyle(
+        style: const TextStyle(
+          color: Color.fromARGB(255, 16, 12, 1), // ivory
+          fontSize: 16,
+        ),
+        child: IconTheme(
+          data: const IconThemeData(
+            color: Color.fromARGB(255, 164, 153, 115), // gold
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                QuotePage(),
+                AboutGMPage(),
 
-            MyPage(),
-            const AllQuotesGallery(),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16, 24, 16, 16),
-              child: Text(
-                'Resources Library',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
+                MyPage(),
+                const AllQuotesGallery(),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 24, 16, 16),
+                  child: Text(
+                    'Resources Library',
+                    style: TextStyle(
+                      color: const Color(0xFF121212),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                ResourceGrid(),
+              ],
             ),
-            ResourceGrid(),
-          ],
+          ),
         ),
       ),
     );
