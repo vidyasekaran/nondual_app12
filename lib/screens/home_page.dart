@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nondual_app/screens/audo_page.dart';
+import 'package:nondual_app/screens/about_gm.dart';
 import 'package:nondual_app/screens/quotepage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../utils/adminlongpresstitle.dart';
 import '../utils/resourcegrid_nice.dart';
 import 'my_page.dart';
-import 'about_gm.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -64,8 +63,9 @@ class HomePage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                QuotePage(),
                 AboutGMPage(),
+
+                QuotePage(),
 
                 MyPage(),
                 const AllQuotesGallery(),

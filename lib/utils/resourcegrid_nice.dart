@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nondual_app/data/books_data.dart';
 import 'package:nondual_app/data/youtube_links.dart';
+import 'package:nondual_app/model/gm_gpt_model.dart';
 import 'package:nondual_app/utils/showBookLinksBottomSheet.dart';
 import 'package:nondual_app/utils/showSocialMediaBottomSheet.dart';
 import 'package:nondual_app/utils/showWebLinksBottomSheet.dart';
@@ -58,27 +59,18 @@ class ResourceGrid extends StatelessWidget {
           showSocialMediaBottomSheet(context);
         },
       },
-      /*{
-        'icon': Icons.groups,
-        'label': 'Whatsapp',
-        'onTap': (BuildContext context) {
-          openWhatsAppGroup('https://chat.whatsapp.com/FRefNheLZbQAHAfaIL2SwA');
-        },
-      },
-      {
-        'icon': Icons.facebook,
-        'label': 'Facebook Community',
-        'onTap': (BuildContext context) {
-          openFacebook(
-            'https://www.facebook.com/share/g/1B73HtPCbX/?mibextid=wwXIfr',
-          );
-        },
-      },*/
       {
         'icon': Icons.shopping_cart_outlined,
         'label': 'Buy Book',
         'onTap': (BuildContext context) {
           showBooksBottomSheet(context); // ✅ correct place
+        },
+      },
+      {
+        'icon': Icons.smart_toy_outlined,
+        'label': 'GM GPT (AI)',
+        'onTap': (BuildContext context) {
+          showGmGptBottomSheet(context);
         },
       },
     ];
@@ -292,6 +284,53 @@ void showBooksBottomSheet(BuildContext context) {
                 onTap: () {
                   Navigator.pop(context);
                   showBookLinksBottomSheet(context, book);
+                },
+              );
+            }).toList(),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void showGmGptBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (_) {
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "GM GPT – AI Guidance",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(height: 8),
+
+            const Text(
+              "This opens a personal AI conversation (not a group chat).",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 14, color: Colors.black54),
+            ),
+
+            const SizedBox(height: 16),
+
+            ...gmGptLinks.map((item) {
+              return ListTile(
+                leading: Icon(item.icon, color: item.color),
+                title: Text(item.title),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final uri = Uri.parse(item.url);
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
                 },
               );
             }).toList(),

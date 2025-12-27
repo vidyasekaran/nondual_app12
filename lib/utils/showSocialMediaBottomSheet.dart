@@ -24,8 +24,14 @@ final List<SocialLink> socialLinks = [
     color: Colors.green,
   ),
   SocialLink(
-    title: 'Facebook Page',
+    title: 'Facebook-English',
     url: 'https://www.facebook.com/share/g/1B73HtPCbX/?mibextid=wwXIfr',
+    icon: Icons.facebook,
+    color: Colors.blue,
+  ),
+  SocialLink(
+    title: 'Facebook-Tamil',
+    url: 'https://www.facebook.com/share/g/17dzAKycP9/',
     icon: Icons.facebook,
     color: Colors.blue,
   ),
@@ -40,13 +46,6 @@ final List<SocialLink> socialLinks = [
     url: 'https://www.instagram.com/gm_quotes_non_dual/',
     icon: Icons.camera_alt_outlined, // closest Material icon
     color: Colors.purple,
-  ),
-  SocialLink(
-    title: 'Chat with GM (GPT)',
-    url:
-        'https://chatgpt.com/g/g-6946b05e83408191bbedae402e805abd-gm-gpt-the-voice-of-the-absolute',
-    icon: Icons.smart_toy_outlined,
-    color: Colors.black,
   ),
 ];
 
