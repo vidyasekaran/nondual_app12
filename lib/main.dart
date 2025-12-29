@@ -55,8 +55,8 @@ class GMTApp extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFFF9F9F9), // light background color
-              Color(0xFFEFF3F6), // slightly different light tone
+              Color(0xFFE8F5E9), // light green background color
+              Color(0xFFE1F5E3), // slightly different light green tone
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -66,44 +66,6 @@ class GMTApp extends StatelessWidget {
       ),
     );
   }
-}
-
-@override
-Widget build(BuildContext context) {
-  return MaterialApp(
-    title: 'GM Teachings',
-    debugShowCheckedModeBanner: false,
-    routes: {'/admin': (context) => const AdminPage()},
-    theme: ThemeData(
-      primaryColor: const Color(0xFF6C63FF),
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFF6C63FF),
-      ).copyWith(secondary: const Color(0xFFFF6584)),
-      scaffoldBackgroundColor:
-          Colors.transparent, // transparent to show gradient
-      textTheme: const TextTheme(
-        bodyMedium: TextStyle(
-          fontFamily: 'Times New Roman',
-          fontSize: 24,
-          height: 1.6,
-          color: Colors.black54,
-        ),
-      ),
-    ),
-    home: Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromARGB(255, 105, 93, 238), // light background color
-            Color(0xFFEFF3F6), // slightly different light tone
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: const MainScaffold(),
-    ),
-  );
 }
 
 class AdminPage extends StatefulWidget {
@@ -236,34 +198,86 @@ class _MainScaffoldState extends State<MainScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: (index) =>
-            setState(() => _selectedIndex = index),
-        backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.9),
-        elevation: 0,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              const Color(0xFF1B5E20), // Much darker green
+              const Color(0xFF2E7D32), // Darker green
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          NavigationDestination(
-            icon: Icon(Icons.school_outlined),
-            selectedIcon: Icon(Icons.school),
-            label: 'Teachings',
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 20,
+              offset: const Offset(0, -4),
+              spreadRadius: 0,
+            ),
+            BoxShadow(
+              color: Colors.white.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, -2),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            navigationBarTheme: NavigationBarThemeData(
+              labelTextStyle: MaterialStateProperty.resolveWith((states) {
+                if (states.contains(MaterialState.selected)) {
+                  return GoogleFonts.inter(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    letterSpacing: 0.3,
+                  );
+                }
+                return GoogleFonts.inter(
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                  letterSpacing: 0.3,
+                );
+              }),
+            ),
           ),
-          NavigationDestination(
-            icon: Icon(Icons.menu_book_outlined),
-            selectedIcon: Icon(Icons.menu_book),
-            label: 'Resources',
+          child: NavigationBar(
+            selectedIndex: _selectedIndex,
+            onDestinationSelected: (index) =>
+                setState(() => _selectedIndex = index),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            indicatorColor: Colors.white.withOpacity(0.3), // Light indicator for dark green footer
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            destinations: [
+              NavigationDestination(
+                icon: const Icon(Icons.home_outlined, color: Colors.white70),
+                selectedIcon: const Icon(Icons.home, color: Colors.white),
+                label: 'Home',
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.school_outlined, color: Colors.white70),
+                selectedIcon: const Icon(Icons.school, color: Colors.white),
+                label: 'Teachings',
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.menu_book_outlined, color: Colors.white70),
+                selectedIcon: const Icon(Icons.menu_book, color: Colors.white),
+                label: 'Resources',
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.info_outline, color: Colors.white70),
+                selectedIcon: const Icon(Icons.info, color: Colors.white),
+                label: 'About',
+              ),
+            ],
           ),
-          NavigationDestination(
-            icon: Icon(Icons.info_outline),
-            selectedIcon: Icon(Icons.info),
-            label: 'About',
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -30,14 +30,14 @@ class ResourceGrid extends StatelessWidget {
     final List<Map<String, dynamic>> resources = [
       {
         'icon': Icons.local_florist_outlined,
-        'label': 'Satsang - YouTube',
+        'label': 'Satsang-YouTube',
         'onTap': (BuildContext context) {
           showYoutubeBottomSheet(context);
         },
       },
       {
         'icon': Icons.music_note_outlined,
-        'label': 'Satsang - Spotify',
+        'label': 'Satsang-Spotify',
         'onTap': (BuildContext context) {
           _launchUrl(
             'https://open.spotify.com/show/3diTrqSFWQfbpalggpakuO?si=b9c87030fc1d41a2',

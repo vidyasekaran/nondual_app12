@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nondual_app/screens/about_gm.dart';
 import 'package:nondual_app/screens/quotepage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../utils/adminlongpresstitle.dart';
 import '../utils/resourcegrid_nice.dart';
 import 'my_page.dart';
@@ -12,15 +13,26 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: const Color(0xFFF2F2F2),
-      backgroundColor: const Color.fromARGB(255, 113, 151, 138),
-
-      //backgroundColor: const Color(0xFF121212),
+      backgroundColor: const Color(0xFFE8F5E9), // Light green background
       appBar: AppBar(
         title: AdminLongPressTitle(),
         centerTitle: true,
-        // backgroundColor: Theme.of(context).colorScheme.surface,
-        backgroundColor: const Color.fromARGB(255, 208, 177, 73),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                const Color(0xFF1B5E20), // Much darker green
+                const Color(0xFF2E7D32), // Darker green
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
+        elevation: 4,
+        shadowColor: Colors.black.withOpacity(0.3),
         scrolledUnderElevation: 0,
         actions: [
           PopupMenuButton<String>(
@@ -69,18 +81,65 @@ class HomePage extends StatelessWidget {
 
                 MyPage(),
                 const AllQuotesGallery(),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(16, 24, 16, 16),
-                  child: Text(
-                    'Resources Library',
-                    style: TextStyle(
-                      color: const Color(0xFF121212),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 24),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                const Color(0xFFC8E6C9), // Slightly darker green
+                                const Color(0xFFB8D9BA), // Even slightly darker for depth
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(24),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 15,
+                                offset: const Offset(0, 6),
+                                spreadRadius: 0,
+                              ),
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.5),
+                                blurRadius: 10,
+                                offset: const Offset(-3, -3),
+                                spreadRadius: 0,
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Resources Library",
+                                style: GoogleFonts.inter(
+                                  fontSize: 20,
+                                  height: 1.2,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xFF0D4F1C), // Dark green for better readability
+                                  letterSpacing: 0.5,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 28),
+                              ResourceGrid(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                    ],
                   ),
                 ),
-                ResourceGrid(),
               ],
             ),
           ),
@@ -114,40 +173,99 @@ class AllQuotesGallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<String>>(
-      future: fetchAllQuoteImages(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No images found'));
-        }
-
-        final images = snapshot.data!;
-
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AppBar(title: const Text('All Quotes')),
-            GridView.builder(
-              padding: const EdgeInsets.all(12),
-              shrinkWrap: true, // 🔑 IMPORTANT
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    const Color(0xFFC8E6C9), // Slightly darker green
+                    const Color(0xFFB8D9BA), // Even slightly darker for depth
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 15,
+                    offset: const Offset(0, 6),
+                    spreadRadius: 0,
+                  ),
+                  BoxShadow(
+                    color: Colors.white.withOpacity(0.5),
+                    blurRadius: 10,
+                    offset: const Offset(-3, -3),
+                    spreadRadius: 0,
+                  ),
+                ],
               ),
-              itemCount: images.length,
-              itemBuilder: (context, index) {
-                return Image.network(images[index], fit: BoxFit.cover);
-              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "All Quotes",
+                    style: GoogleFonts.inter(
+                      fontSize: 20,
+                      height: 1.2,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF0D4F1C), // Dark green for better readability
+                      letterSpacing: 0.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 28),
+                  FutureBuilder<List<String>>(
+                    future: fetchAllQuoteImages(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+
+                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(child: Text('No images found'));
+                      }
+
+                      final images = snapshot.data!;
+
+                      return GridView.builder(
+                        padding: const EdgeInsets.all(12),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                        ),
+                        itemCount: images.length,
+                        itemBuilder: (context, index) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              images[index],
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-          ],
-        );
-      },
+          ),
+          const SizedBox(height: 24),
+        ],
+      ),
     );
   }
 }

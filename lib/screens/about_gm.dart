@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 
 class AboutGMPage extends StatelessWidget {
@@ -12,17 +13,17 @@ class AboutGMPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 24),
+          const SizedBox(height: 8),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: EventCard(),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 5),
         ],
       ),
     );
@@ -36,56 +37,67 @@ class EventCard extends StatelessWidget {
     return await rootBundle.loadString('assets/text/aboutgm.txt');
   }
 
-  /*
-  Future<void> loadRandomQuote() async {
-    final text = await rootBundle.loadString('assets/text/quotes.txt');
-    final quotes = text
-        .split('\n')
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .toList();
-  }*/
-
   @override
   Widget build(BuildContext context) {
     final quotes = [
-      "No Persons here! Only pure Presence!",
-      "Your Consciousness is Infinite Beyond Boundaries..!",
-      "At the Awareness level...You are Total...The Wholeness..!",
-      "Better remain Conscious and Know what you are exactly!",
-      "When your Consciousness merges with its source..it transcends itself and knows its Eternity Forever!",
-      "Non Dual is Immovable, Indescribable...Complete by itself!",
-      "Your 'Iam ness' Consciousness is Incomplete at the Personality Level.!",
-      "In Non dual there is nothing here other than Me !",
-      "Absolute - Non Dual.! There is no division.!",
-      "Awareness is the Observer of the Self and its play!",
+      "No Persons here! Only pure Presence!\n .GM..",
+      "No events here! Only pure Presence!\n..GM..",
+      "No time here! Only pure Presence!\n..GM..",
+      "No objects here! Only pure Presence!\n..GM..",
+      "Your Consciousness is Infinite Beyond Boundaries..!\n..GM..",
+      "At the Awareness level...You are Total...The Wholeness..!\n..GM..",
+      "Better remain Conscious and Know what you are exactly!\n..GM..",
+      "When your Consciousness merges with its source..it transcends itself and knows its Eternity Forever!\n..GM..",
+      "Non Dual is Immovable, Indescribable...Complete by itself!\n..GM..",
+      "Your 'Iam ness' Consciousness is Incomplete at the Personality Level.!\n..GM..",
+      "In Non dual there is nothing here other than Me !\n..GM..",
+      "Absolute - Non Dual.! There is no division.!\n..GM..",
+      "Awareness is the Observer of the Self and its play!\n..GM..",
     ];
 
     return Container(
-      //height: 578,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFFBFE6E9),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4)),
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFFC8E6C9), // Slightly darker green
+            const Color(0xFFB8D9BA), // Even slightly darker for depth
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 15,
+            offset: const Offset(0, 6),
+            spreadRadius: 0,
+          ),
+          BoxShadow(
+            color: Colors.white.withOpacity(0.5),
+            blurRadius: 10,
+            offset: const Offset(-3, -3),
+            spreadRadius: 0,
+          ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             "About GM",
-            style: TextStyle(
-              fontSize: 16,
-              height: 1.0,
-              fontFamily: 'PlayfairDisplay',
+            style: GoogleFonts.inter(
+              fontSize: 20,
+              height: 1.2,
               fontWeight: FontWeight.bold,
+              color: const Color(0xFF0D4F1C), // Dark green for better readability
+              letterSpacing: 0.5,
             ),
             textAlign: TextAlign.center,
           ),
 
-          const SizedBox(height: 28),
+          const SizedBox(height: 10),
 
           FutureBuilder<String>(
             future: loadText(),
@@ -96,7 +108,7 @@ class EventCard extends StatelessWidget {
               final aboutGM = snapshot.data!;
 
               const imgUrl =
-                  'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/quote/GM_Photo.jpeg';
+                  'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/quote/GM_Photo.png';
 
               final double imageSize = MediaQuery.of(context).size.width * 0.3;
 
@@ -124,17 +136,26 @@ class EventCard extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 20),
                   ExpansionTile(
-                    tilePadding: EdgeInsets.zero,
+                    tilePadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    textColor: const Color(0xFF0D4F1C), // Dark green for better readability
+                    iconColor: const Color(0xFF0D4F1C),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    collapsedShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     title: Text(
                       quotes[Random().nextInt(quotes.length)],
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        height: 1,
-                        fontFamily: 'PlayfairDisplay',
-                        fontWeight: FontWeight.bold,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        height: 1.3,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF0D4F1C), // Dark green for better readability
+                        letterSpacing: 0.3,
                       ),
                     ),
 
@@ -143,11 +164,12 @@ class EventCard extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 12),
                         child: Text(
                           aboutGM,
-                          style: const TextStyle(
+                          style: GoogleFonts.inter(
                             fontSize: 14,
-                            height: 1.5,
-                            fontFamily: 'PlayfairDisplay',
-                            // fontWeight: FontWeight.bold,
+                            height: 1.6,
+                            color: const Color(0xFF0D4F1C), // Dark green for better readability
+                            letterSpacing: 0.2,
+                            fontWeight: FontWeight.w400,
                           ),
                           textAlign: TextAlign.center,
                         ),
