@@ -38,7 +38,12 @@ class AdminLongPressTitleState extends State<AdminLongPressTitle> {
         style: GoogleFonts.inter(
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          color: Colors.white, // White text for readability on dark header
+          color: const Color.fromARGB(
+            255,
+            239,
+            241,
+            237,
+          ), // White text for readability on dark header
           letterSpacing: 0.5,
         ),
       ),

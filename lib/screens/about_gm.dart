@@ -91,7 +91,9 @@ class EventCard extends StatelessWidget {
               fontSize: 20,
               height: 1.2,
               fontWeight: FontWeight.bold,
-              color: const Color(0xFF0D4F1C), // Dark green for better readability
+              color: const Color(
+                0xFF0D4F1C,
+              ), // Dark green for better readability
               letterSpacing: 0.5,
             ),
             textAlign: TextAlign.center,
@@ -107,8 +109,10 @@ class EventCard extends StatelessWidget {
               }
               final aboutGM = snapshot.data!;
 
-              const imgUrl =
-                  'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/quote/GM_Photo.png';
+              //const imgUrl =
+              //    'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/quote/GM_Photo.png';
+
+              const imgUrl = 'assets/images/GM_Photo.png';
 
               final double imageSize = MediaQuery.of(context).size.width * 0.3;
 
@@ -138,8 +142,13 @@ class EventCard extends StatelessWidget {
 
                   const SizedBox(height: 20),
                   ExpansionTile(
-                    tilePadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    textColor: const Color(0xFF0D4F1C), // Dark green for better readability
+                    tilePadding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    textColor: const Color(
+                      0xFF0D4F1C,
+                    ), // Dark green for better readability
                     iconColor: const Color(0xFF0D4F1C),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -154,7 +163,9 @@ class EventCard extends StatelessWidget {
                         fontSize: 14,
                         height: 1.3,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF0D4F1C), // Dark green for better readability
+                        color: const Color(
+                          0xFF0D4F1C,
+                        ), // Dark green for better readability
                         letterSpacing: 0.3,
                       ),
                     ),
@@ -167,7 +178,9 @@ class EventCard extends StatelessWidget {
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             height: 1.6,
-                            color: const Color(0xFF0D4F1C), // Dark green for better readability
+                            color: const Color(
+                              0xFF0D4F1C,
+                            ), // Dark green for better readability
                             letterSpacing: 0.2,
                             fontWeight: FontWeight.w400,
                           ),

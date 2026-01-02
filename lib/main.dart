@@ -10,10 +10,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'screens/home_page.dart';
 import 'utils/resourcegrid_nice.dart';
 import 'dart:typed_data';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   const supabaseUrl = 'https://rvevlngiswoduyxwetsb.supabase.co';
   const supabaseKey =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2ZXZsbmdpc3dvZHV5eHdldHNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwODg3NzUsImV4cCI6MjA4MTY2NDc3NX0.GZIx0yYfLIMohNMjFY25vmitKihK5bNalHPclrQI3Gc';
@@ -252,7 +252,9 @@ class _MainScaffoldState extends State<MainScaffold> {
                 setState(() => _selectedIndex = index),
             backgroundColor: Colors.transparent,
             elevation: 0,
-            indicatorColor: Colors.white.withOpacity(0.3), // Light indicator for dark green footer
+            indicatorColor: Colors.white.withOpacity(
+              0.3,
+            ), // Light indicator for dark green footer
             labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
             destinations: [
               NavigationDestination(
@@ -266,7 +268,10 @@ class _MainScaffoldState extends State<MainScaffold> {
                 label: 'Teachings',
               ),
               NavigationDestination(
-                icon: const Icon(Icons.menu_book_outlined, color: Colors.white70),
+                icon: const Icon(
+                  Icons.menu_book_outlined,
+                  color: Colors.white70,
+                ),
                 selectedIcon: const Icon(Icons.menu_book, color: Colors.white),
                 label: 'Resources',
               ),

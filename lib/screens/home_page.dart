@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nondual_app/screens/about_gm.dart';
 import 'package:nondual_app/screens/quotepage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../utils/adminlongpresstitle.dart';
 import '../utils/resourcegrid_nice.dart';
 import 'my_page.dart';
+import 'dart:math';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -21,8 +24,8 @@ class HomePage extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                const Color(0xFF1B5E20), // Much darker green
-                const Color(0xFF2E7D32), // Darker green
+                const Color.fromARGB(255, 55, 131, 60), // Much darker green
+                const Color.fromARGB(255, 42, 126, 46), // Darker green
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -42,8 +45,36 @@ class HomePage extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (ctx) => AlertDialog(
-                    title: const Text("Downloads"),
-                    content: const Text("This feature is work in progress."),
+                    title: const Text(" 2026 Calendar"),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          leading: const Icon(Icons.picture_as_pdf),
+                          title: const Text("2026 Calendar"),
+                          onTap: () async {
+                            const url =
+                                'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/calander/cover.pdf';
+                            final uri = Uri.parse(url);
+                            if (await canLaunchUrl(uri)) {
+                              await launchUrl(
+                                uri,
+                                mode: LaunchMode.externalApplication,
+                              );
+                            } else {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Could not launch URL'),
+                                  ),
+                                );
+                              }
+                            }
+                            if (context.mounted) Navigator.pop(ctx);
+                          },
+                        ),
+                      ],
+                    ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(ctx),
@@ -94,8 +125,12 @@ class HomePage extends StatelessWidget {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                const Color(0xFFC8E6C9), // Slightly darker green
-                                const Color(0xFFB8D9BA), // Even slightly darker for depth
+                                const Color(
+                                  0xFFC8E6C9,
+                                ), // Slightly darker green
+                                const Color(
+                                  0xFFB8D9BA,
+                                ), // Even slightly darker for depth
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -125,7 +160,9 @@ class HomePage extends StatelessWidget {
                                   fontSize: 20,
                                   height: 1.2,
                                   fontWeight: FontWeight.bold,
-                                  color: const Color(0xFF0D4F1C), // Dark green for better readability
+                                  color: const Color(
+                                    0xFF0D4F1C,
+                                  ), // Dark green for better readability
                                   letterSpacing: 0.5,
                                 ),
                                 textAlign: TextAlign.center,
@@ -150,7 +187,7 @@ class HomePage extends StatelessWidget {
 }
 
 Future<List<String>> fetchAllQuoteImages() async {
-  final supabase = Supabase.instance.client;
+  /*final supabase = Supabase.instance.client;
 
   final files = await supabase.storage.from('quote').list(path: 'allquotes');
   print(files);
@@ -165,7 +202,21 @@ Future<List<String>> fetchAllQuoteImages() async {
         (f) =>
             supabase.storage.from('quote').getPublicUrl('allquotes/${f.name}'),
       )
-      .toList();
+      .toList();*/
+
+  const int totalImages = 18; // change if needed
+  const String basePath = 'images/quotes';
+
+  // Generate all asset paths
+  final List<String> allImages = List.generate(
+    totalImages,
+    (index) => '$basePath/${index + 1}.jpeg',
+  );
+
+  // Shuffle and pick 6
+  allImages.shuffle(Random());
+
+  return allImages.take(6).toList();
 }
 
 class AllQuotesGallery extends StatelessWidget {
@@ -186,8 +237,8 @@ class AllQuotesGallery extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    const Color(0xFFC8E6C9), // Slightly darker green
-                    const Color(0xFFB8D9BA), // Even slightly darker for depth
+                    const Color.fromARGB(255, 55, 131, 60), // Much darker green
+                    const Color.fromARGB(255, 42, 126, 46), // Darker green
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -217,7 +268,11 @@ class AllQuotesGallery extends StatelessWidget {
                       fontSize: 20,
                       height: 1.2,
                       fontWeight: FontWeight.bold,
-                      color: const Color(0xFF0D4F1C), // Dark green for better readability
+
+                      //  const Color(0xFFC8E6C9),  const Color(0xFFB8D9BA),
+                      color: const Color(
+                        0xFFC8E6C9,
+                      ), // Dark green for better readability
                       letterSpacing: 0.5,
                     ),
                     textAlign: TextAlign.center,
@@ -240,19 +295,26 @@ class AllQuotesGallery extends StatelessWidget {
                         padding: const EdgeInsets.all(12),
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                        ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                            ),
                         itemCount: images.length,
                         itemBuilder: (context, index) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              images[index],
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
+                          return GestureDetector(
+                            onTap: () {
+                              _showImageViewer(context, images, index);
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset(
+                                images[index],
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) =>
+                                    const Icon(Icons.broken_image),
+                              ),
                             ),
                           );
                         },
@@ -270,6 +332,48 @@ class AllQuotesGallery extends StatelessWidget {
   }
 }
 
+void _showImageViewer(
+  BuildContext context,
+  List<String> images,
+  int initialIndex,
+) {
+  showDialog(
+    context: context,
+    barrierColor: Colors.black,
+    builder: (_) => Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          PageView.builder(
+            controller: PageController(initialPage: initialIndex),
+            itemCount: images.length,
+            itemBuilder: (context, index) {
+              return Center(
+                child: InteractiveViewer(
+                  minScale: 0.8,
+                  maxScale: 4.0,
+                  child: Image.asset(images[index], fit: BoxFit.contain),
+                ),
+              );
+            },
+          ),
+
+          // Close button
+          Positioned(
+            top: 40,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.close, color: Colors.white),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+/*
 class ExploreList extends StatelessWidget {
   const ExploreList({super.key});
 
@@ -310,7 +414,7 @@ class ExploreList extends StatelessWidget {
       },
     );
   }
-}
+}*/
 
 class Quotes extends StatelessWidget {
   final List<String> images;

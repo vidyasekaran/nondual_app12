@@ -2,7 +2,7 @@ import 'package:nondual_app/model/book.dart';
 
 final List<Book> books = [
   Book(
-    title: "Know Your Supreme Richeness (English)",
+    title: "Know Your Supreme Richness",
     image: "assets/images/bookfront.jpg",
     language: "English",
     links: {
@@ -13,7 +13,7 @@ final List<Book> books = [
     },
   ),
   Book(
-    title: "Know Your Supreme Richeness (Hindi)",
+    title: "अपनी सर्वोच्च समृद्धि को जानो!",
     image: "assets/images/hindi-bookcover.jpeg",
     language: "Hindi",
     links: {
@@ -22,7 +22,7 @@ final List<Book> books = [
     },
   ),
   Book(
-    title: "Know Your Supreme Richeness (Marathi)",
+    title: "तुमची सर्वोच्च समृद्धी जाण!",
     image: "assets/images/marathi-bookcover.jpeg",
     language: "Marathi",
     links: {
@@ -31,7 +31,7 @@ final List<Book> books = [
     },
   ),
   Book(
-    title: "Neeye PariPoorana Nithyam (Tamil)",
+    title: "நீயே பரிபூரண நித்தியம்",
     image: "assets/images/tamil-bookcover.jpeg",
     language: "Tamil",
     links: {

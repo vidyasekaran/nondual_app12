@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../data/web_links.dart';
 
 class SocialLink {
   final String title;
@@ -34,6 +34,12 @@ final List<SocialLink> socialLinks = [
     url: 'https://www.facebook.com/share/g/17dzAKycP9/',
     icon: Icons.facebook,
     color: Colors.blue,
+  ),
+  SocialLink(
+    title: 'Twitter',
+    url: 'https://x.com/TeachingsGM?t=hpyS6jYF8JZw2tbQunxWtg&s=09',
+    icon: FontAwesomeIcons.xTwitter,
+    color: Colors.black,
   ),
   SocialLink(
     title: 'Telegram Channel',

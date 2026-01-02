@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nondual_app/model/book.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/material.dart'; // ✅ REQUIRED
 
 void showBookLinksBottomSheet(BuildContext context, Book book) {
   showModalBottomSheet(

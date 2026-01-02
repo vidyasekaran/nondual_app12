@@ -17,6 +17,8 @@ class QuotePage extends StatelessWidget {
     final imageUrl =
         '${supabase.storage.from('quote').getPublicUrl(todayPath)}?t=${DateTime.now().millisecondsSinceEpoch}';
 
+    final noQuoteUrl = 'assets/images/quote.jpeg';
+
     return Padding(
       padding: const EdgeInsets.all(32),
       child: Column(
@@ -33,27 +35,33 @@ class QuotePage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
- AspectRatio(
-  aspectRatio: 3 / 2,
-  child: ClipRRect(
-    child: Image.network(
-      imageUrl,
-      fit: BoxFit.cover,
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) return child;
-        return const Center(child: CircularProgressIndicator());
-      },
-      errorBuilder: (context, error, stackTrace) {
-        return const Center(
-          child: Text(
-            "Today's quote image is not available yet",
-            textAlign: TextAlign.center,
+          AspectRatio(
+            aspectRatio: 3 / 2,
+            child: ClipRRect(
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(child: CircularProgressIndicator());
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Center(
+                    /*  child: Text(
+                      "Today's quote image is not available yet",
+                      textAlign: TextAlign.center,
+                    ),*/
+                    child: Image.asset(
+                      noQuoteUrl,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
-        );
-      },
-    ),
-  ),
-),
         ],
       ),
     );

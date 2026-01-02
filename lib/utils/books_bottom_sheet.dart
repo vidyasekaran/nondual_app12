@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/books_data.dart';
 import '../../utils/books_list.dart';
-
-import 'package:url_launcher/url_launcher.dart';
 
 class BooksBottomSheet {
   /// Entry point
