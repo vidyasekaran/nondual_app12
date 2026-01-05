@@ -18,34 +18,42 @@ class AdminLongPressTitleState extends State<AdminLongPressTitle> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onLongPressStart: (_) {
-        print("Long press started");
         _adminPressing = true;
 
         _adminTimer = Timer(const Duration(seconds: 1), () {
           if (_adminPressing) {
-            print("Admin unlocked");
             Navigator.of(context).pushNamed('/admin');
           }
         });
       },
       onLongPressEnd: (_) {
-        print("Long press ended");
         _adminPressing = false;
         _adminTimer?.cancel();
       },
-      child: Text(
-        "GM's NonDual Teachings",
-        style: GoogleFonts.inter(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: const Color.fromARGB(
-            255,
-            239,
-            241,
-            237,
-          ), // White text for readability on dark header
-          letterSpacing: 0.5,
-        ),
+
+      child: Row(
+        mainAxisSize: MainAxisSize.min, // important for AppBar
+        children: [
+          /* ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              'assets/images/GM_Photo.png', // 👈 change if needed
+              width: 36,
+              height: 36,
+              fit: BoxFit.cover,
+            ),
+          ),*/
+          const SizedBox(width: 10),
+          Text(
+            "GM's NonDual Teachings",
+            style: GoogleFonts.inter(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 239, 241, 237),
+              letterSpacing: 0.5,
+            ),
+          ),
+        ],
       ),
     );
   }

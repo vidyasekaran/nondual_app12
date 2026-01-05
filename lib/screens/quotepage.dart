@@ -51,7 +51,7 @@ class QuotePage extends StatelessWidget {
                       "Today's quote image is not available yet",
                       textAlign: TextAlign.center,
                     ),*/
-                    child: Image.asset(
+                    child: Image.network(
                       noQuoteUrl,
                       width: double.infinity,
                       height: double.infinity,

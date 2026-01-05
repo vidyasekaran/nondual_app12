@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nondual_app/screens/about_gm.dart';
 import 'package:nondual_app/screens/quotepage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -187,7 +186,7 @@ class HomePage extends StatelessWidget {
 }
 
 Future<List<String>> fetchAllQuoteImages() async {
-  /*final supabase = Supabase.instance.client;
+  final supabase = Supabase.instance.client;
 
   final files = await supabase.storage.from('quote').list(path: 'allquotes');
   print(files);
@@ -202,8 +201,8 @@ Future<List<String>> fetchAllQuoteImages() async {
         (f) =>
             supabase.storage.from('quote').getPublicUrl('allquotes/${f.name}'),
       )
-      .toList();*/
-
+      .toList();
+  /*
   const int totalImages = 18; // change if needed
   const String basePath = 'images/quotes';
 
@@ -216,7 +215,7 @@ Future<List<String>> fetchAllQuoteImages() async {
   // Shuffle and pick 6
   allImages.shuffle(Random());
 
-  return allImages.take(6).toList();
+  return allImages.take(6).toList();*/
 }
 
 class AllQuotesGallery extends StatelessWidget {
@@ -309,7 +308,7 @@ class AllQuotesGallery extends StatelessWidget {
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
+                              child: Image.network(
                                 images[index],
                                 fit: BoxFit.cover,
                                 errorBuilder: (_, __, ___) =>
@@ -352,7 +351,7 @@ void _showImageViewer(
                 child: InteractiveViewer(
                   minScale: 0.8,
                   maxScale: 4.0,
-                  child: Image.asset(images[index], fit: BoxFit.contain),
+                  child: Image.network(images[index], fit: BoxFit.contain),
                 ),
               );
             },
@@ -434,7 +433,7 @@ class Quotes extends StatelessWidget {
         ),
         itemCount: images.length,
         itemBuilder: (context, index) {
-          return Image.asset(images[index]);
+          return Image.network(images[index]);
         },
       ),
     );
