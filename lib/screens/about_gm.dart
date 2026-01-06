@@ -109,10 +109,10 @@ class EventCard extends StatelessWidget {
               }
               final aboutGM = snapshot.data!;
 
-              //const imgUrl =
-              //    'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/quote/GM_Photo.png';
+              const imgUrl =
+                  'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/quote/GM_Photo.png';
 
-              const imgUrl = 'assets/images/GM_Photo.png';
+              // const imgUrl = 'assets/images/GM_Photo.png';
 
               final double imageSize = MediaQuery.of(context).size.width * 0.3;
 

@@ -7,7 +7,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../utils/adminlongpresstitle.dart';
 import '../utils/resourcegrid_nice.dart';
 import 'my_page.dart';
-import 'dart:math';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -189,8 +188,8 @@ Future<List<String>> fetchAllQuoteImages() async {
   final supabase = Supabase.instance.client;
 
   final files = await supabase.storage.from('quote').list(path: 'allquotes');
-  print(files);
-  return files
+
+  final imageUrls = files
       .where(
         (f) =>
             f.name.endsWith('.jpeg') ||
@@ -199,23 +198,14 @@ Future<List<String>> fetchAllQuoteImages() async {
       )
       .map(
         (f) =>
-            supabase.storage.from('quote').getPublicUrl('allquotes/${f.name}'),
+            '${supabase.storage.from('quote').getPublicUrl('allquotes/${f.name}')}?v=${f.name}',
+        //supabase.storage.from('quote').getPublicUrl('allquotes/${f.name}'),
       )
+      .toSet()
       .toList();
-  /*
-  const int totalImages = 18; // change if needed
-  const String basePath = 'images/quotes';
 
-  // Generate all asset paths
-  final List<String> allImages = List.generate(
-    totalImages,
-    (index) => '$basePath/${index + 1}.jpeg',
-  );
-
-  // Shuffle and pick 6
-  allImages.shuffle(Random());
-
-  return allImages.take(6).toList();*/
+  imageUrls.shuffle();
+  return imageUrls;
 }
 
 class AllQuotesGallery extends StatelessWidget {
@@ -310,7 +300,10 @@ class AllQuotesGallery extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                               child: Image.network(
                                 images[index],
+                                key: ValueKey(images[index]), // 🔑 important
+
                                 fit: BoxFit.cover,
+                                gaplessPlayback: false,
                                 errorBuilder: (_, __, ___) =>
                                     const Icon(Icons.broken_image),
                               ),
@@ -351,7 +344,12 @@ void _showImageViewer(
                 child: InteractiveViewer(
                   minScale: 0.8,
                   maxScale: 4.0,
-                  child: Image.network(images[index], fit: BoxFit.contain),
+                  child: Image.network(
+                    images[index],
+                    key: ValueKey(images[index]),
+                    fit: BoxFit.contain,
+                    gaplessPlayback: false,
+                  ),
                 ),
               );
             },
@@ -372,49 +370,6 @@ void _showImageViewer(
   );
 }
 
-/*
-class ExploreList extends StatelessWidget {
-  const ExploreList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<List<String>>(
-      future: fetchAllQuoteImages(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No images found'));
-        }
-
-        final images = snapshot.data!;
-
-        return GridView.builder(
-          padding: const EdgeInsets.all(12),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-          ),
-          itemCount: images.length,
-          itemBuilder: (context, index) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                images[index],
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-}*/
-
 class Quotes extends StatelessWidget {
   final List<String> images;
 
@@ -433,7 +388,12 @@ class Quotes extends StatelessWidget {
         ),
         itemCount: images.length,
         itemBuilder: (context, index) {
-          return Image.network(images[index]);
+          return Image.network(
+            images[index],
+            key: ValueKey(images[index]),
+            fit: BoxFit.contain,
+            gaplessPlayback: false,
+          );
         },
       ),
     );
