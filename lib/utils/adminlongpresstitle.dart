@@ -34,15 +34,6 @@ class AdminLongPressTitleState extends State<AdminLongPressTitle> {
       child: Row(
         mainAxisSize: MainAxisSize.min, // important for AppBar
         children: [
-          /* ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              'assets/images/GM_Photo.png', // 👈 change if needed
-              width: 36,
-              height: 36,
-              fit: BoxFit.cover,
-            ),
-          ),*/
           const SizedBox(width: 10),
           Text(
             "GM's NonDual Teachings",

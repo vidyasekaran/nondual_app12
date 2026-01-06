@@ -4,13 +4,20 @@ import 'package:nondual_app/screens/quotepage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:typed_data';
 import '../utils/adminlongpresstitle.dart';
 import '../utils/resourcegrid_nice.dart';
 import 'my_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  final String? aboutHeaderUrl;
+  const HomePage({super.key, this.aboutHeaderUrl});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,6 +111,21 @@ class HomePage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                if (widget.aboutHeaderUrl != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.network(
+                        widget.aboutHeaderUrl!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
+                    ),
+                  ),
                 AboutGMPage(),
 
                 QuotePage(),

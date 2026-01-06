@@ -38,27 +38,37 @@ class QuotePage extends StatelessWidget {
           AspectRatio(
             aspectRatio: 3 / 2,
             child: ClipRRect(
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return const Center(child: CircularProgressIndicator());
+              borderRadius: BorderRadius.circular(12),
+              child: GestureDetector(
+                onTap: () {
+                  _showImageViewer(
+                    context,
+                    [imageUrl], // 👈 pass as list
+                    0, // 👈 first (and only) image
+                  );
                 },
-                errorBuilder: (context, error, stackTrace) {
-                  return Center(
-                    /*  child: Text(
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Center(
+                      /*  child: Text(
                       "Today's quote image is not available yet",
                       textAlign: TextAlign.center,
                     ),*/
-                    child: Image.network(
-                      noQuoteUrl,
-                      width: double.infinity,
-                      height: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  );
-                },
+                      child: Image.network(
+                        noQuoteUrl,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -66,4 +76,61 @@ class QuotePage extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showImageViewer(
+  BuildContext context,
+  List<String> images,
+  int initialIndex,
+) {
+  showDialog(
+    context: context,
+    barrierColor: Colors.black,
+    builder: (_) => Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          PageView.builder(
+            controller: PageController(initialPage: initialIndex),
+            itemCount: images.length,
+            itemBuilder: (context, index) {
+              return Center(
+                child: InteractiveViewer(
+                  minScale: 0.8,
+                  maxScale: 4.0,
+                  child: Image.network(
+                    images[index],
+                    key: ValueKey(images[index]),
+                    fit: BoxFit.contain,
+                    gaplessPlayback: false,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const Center(
+                        child: CircularProgressIndicator(color: Colors.white),
+                      );
+                    },
+                    errorBuilder: (_, __, ___) => const Icon(
+                      Icons.broken_image,
+                      color: Colors.white,
+                      size: 48,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+
+          // Close button
+          Positioned(
+            top: 40,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.close, color: Colors.white),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

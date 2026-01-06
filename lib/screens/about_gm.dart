@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
+import 'dart:typed_data';
 
 class AboutGMPage extends StatelessWidget {
   const AboutGMPage({super.key});
@@ -31,7 +32,9 @@ class AboutGMPage extends StatelessWidget {
 }
 
 class EventCard extends StatelessWidget {
-  const EventCard({super.key});
+  const EventCard({super.key, this.headerImageBytes});
+
+  final Uint8List? headerImageBytes;
 
   Future<String> loadText() async {
     return await rootBundle.loadString('assets/text/aboutgm.txt');
@@ -122,21 +125,24 @@ class EventCard extends StatelessWidget {
                     child: SizedBox(
                       width: imageSize,
                       height: imageSize,
-                      child: Image.network(
-                        imgUrl,
-                        fit: BoxFit.cover,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Center(
-                            child: Icon(Icons.person, size: 40),
-                          );
-                        },
-                      ),
+                      child: headerImageBytes != null
+                          ? Image.memory(headerImageBytes!, fit: BoxFit.cover)
+                          : Image.network(
+                              imgUrl,
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  },
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Center(
+                                  child: Icon(Icons.person, size: 40),
+                                );
+                              },
+                            ),
                     ),
                   ),
 

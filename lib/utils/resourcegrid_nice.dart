@@ -8,7 +8,7 @@ import 'package:nondual_app/utils/showWebLinksBottomSheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ResourceGrid extends StatelessWidget {
-  ResourceGrid({super.key});
+  const ResourceGrid({super.key});
 
   Future<void> _launchUrl(String urlString) async {
     final Uri url = Uri.parse(urlString);
@@ -105,6 +105,7 @@ class ResourceGrid extends StatelessWidget {
               _launchUrl(item['url']); // fallback if url exists
             }
           },
+          onLongPress: item['onLongPress'] as VoidCallback?,
         );
       },
     );
@@ -118,6 +119,7 @@ class _AnimatedResourceCard extends StatefulWidget {
   final Color cardColor;
   final bool isDark;
   final VoidCallback onTap;
+  final VoidCallback? onLongPress;
 
   const _AnimatedResourceCard({
     required this.icon,
@@ -126,6 +128,7 @@ class _AnimatedResourceCard extends StatefulWidget {
     required this.cardColor,
     required this.isDark,
     required this.onTap,
+    this.onLongPress,
   });
 
   @override
@@ -146,6 +149,7 @@ class _AnimatedResourceCardState extends State<_AnimatedResourceCard> {
         onTapUp: (_) => setState(() => _pressed = false),
         onTapCancel: () => setState(() => _pressed = false),
         onTap: widget.onTap,
+        onLongPress: widget.onLongPress,
         child: AnimatedScale(
           scale: _pressed ? 0.95 : (_hover ? 1.05 : 1.0),
           duration: const Duration(milliseconds: 180),

@@ -184,13 +184,90 @@ class MainScaffold extends StatefulWidget {
 
 class _MainScaffoldState extends State<MainScaffold> {
   int _selectedIndex = 0;
+  Uint8List? _aboutImageBytes;
+  String? _aboutHeaderUrl;
 
-  final List<Widget> _pages = [
-    const HomePage(),
+  @override
+  void initState() {
+    super.initState();
+    _loadTodaysAboutHeader();
+  }
+
+  Future<void> _loadTodaysAboutHeader() async {
+    try {
+      final supabase = Supabase.instance.client;
+      final today = DateTime.now();
+      final date =
+          '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+      final path = 'aboutheader/$date.jpg';
+
+      final publicUrl =
+          '${supabase.storage.from('quote').getPublicUrl(path)}?t=${DateTime.now().millisecondsSinceEpoch}';
+
+      final resp = await http_parser.head(Uri.parse(publicUrl));
+      if (resp.statusCode == 200) {
+        setState(() {
+          _aboutHeaderUrl = publicUrl;
+        });
+      }
+    } catch (_) {
+      // silently ignore if not present
+    }
+  }
+
+  Future<void> _pickAboutImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+      setState(() {
+        _aboutImageBytes = bytes;
+      });
+
+      // Upload to Supabase so it persists for the day
+      try {
+        final supabase = Supabase.instance.client;
+        final today = DateTime.now();
+        final date =
+            '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+        final path = 'aboutheader/$date.jpg';
+
+        await supabase.storage.from('quote').remove([path]);
+        await supabase.storage
+            .from('quote')
+            .uploadBinary(
+              path,
+              bytes,
+              fileOptions: const FileOptions(
+                contentType: 'image/jpeg',
+                cacheControl: 'no-cache',
+              ),
+            );
+
+        final publicUrl =
+            '${supabase.storage.from('quote').getPublicUrl(path)}?t=${DateTime.now().millisecondsSinceEpoch}';
+
+        setState(() {
+          _aboutHeaderUrl = publicUrl;
+        });
+      } catch (e) {
+        // ignore upload errors for now, local bytes still shown
+      }
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Image selected for About GM')),
+        );
+      }
+    }
+  }
+
+  List<Widget> get _pages => [
+    HomePage(aboutHeaderUrl: _aboutHeaderUrl),
     const MyPage(),
-    // const Center(child: Text("Teachings Page")),
-    //const Center(child: Text("Resources Page")),
-    ResourceGrid(),
+    const ResourceGrid(),
     const Center(child: Text("About Page")),
   ];
 
@@ -276,8 +353,14 @@ class _MainScaffoldState extends State<MainScaffold> {
                 label: 'Resources',
               ),
               NavigationDestination(
-                icon: const Icon(Icons.info_outline, color: Colors.white70),
-                selectedIcon: const Icon(Icons.info, color: Colors.white),
+                icon: GestureDetector(
+                  onLongPress: _pickAboutImage,
+                  child: const Icon(Icons.info_outline, color: Colors.white70),
+                ),
+                selectedIcon: GestureDetector(
+                  onLongPress: _pickAboutImage,
+                  child: const Icon(Icons.info, color: Colors.white),
+                ),
                 label: 'About',
               ),
             ],
