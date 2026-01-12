@@ -354,11 +354,11 @@ class _MainScaffoldState extends State<MainScaffold> {
               ),
               NavigationDestination(
                 icon: GestureDetector(
-                  onLongPress: _pickAboutImage,
+                  onDoubleTap: _pickAboutImage,
                   child: const Icon(Icons.info_outline, color: Colors.white70),
                 ),
                 selectedIcon: GestureDetector(
-                  onLongPress: _pickAboutImage,
+                  onDoubleTap: _pickAboutImage,
                   child: const Icon(Icons.info, color: Colors.white),
                 ),
                 label: 'About',
