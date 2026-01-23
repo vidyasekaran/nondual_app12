@@ -215,6 +215,8 @@ class _MainScaffoldState extends State<MainScaffold> {
     }
   }
 
+  /*Holiday upload logic commented..
+  It shows image picker and then uploads image to supabase...
   Future<void> _pickAboutImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(
@@ -262,7 +264,7 @@ class _MainScaffoldState extends State<MainScaffold> {
         );
       }
     }
-  }
+  }*/
 
   List<Widget> get _pages => [
     HomePage(aboutHeaderUrl: _aboutHeaderUrl),
@@ -352,13 +354,14 @@ class _MainScaffoldState extends State<MainScaffold> {
                 selectedIcon: const Icon(Icons.menu_book, color: Colors.white),
                 label: 'Resources',
               ),
+              /*              Holiday upload logic commented..*/
               NavigationDestination(
                 icon: GestureDetector(
-                  onDoubleTap: _pickAboutImage,
+                  //onDoubleTap: _pickAboutImage,
                   child: const Icon(Icons.info_outline, color: Colors.white70),
                 ),
                 selectedIcon: GestureDetector(
-                  onDoubleTap: _pickAboutImage,
+                  //onDoubleTap: _pickAboutImage,
                   child: const Icon(Icons.info, color: Colors.white),
                 ),
                 label: 'About',
