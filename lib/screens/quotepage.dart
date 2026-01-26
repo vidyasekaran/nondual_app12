@@ -21,6 +21,7 @@ class QuotePage extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(32),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -39,39 +40,28 @@ class QuotePage extends StatelessWidget {
             aspectRatio: 3 / 2,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: GestureDetector(
-                onTap: () {
-                  _showImageViewer(
-                    context,
-                    [imageUrl], // 👈 pass as list
-                    0, // 👈 first (and only) image
+
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(child: CircularProgressIndicator());
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Center(
+                    child: Image.network(
+                      noQuoteUrl,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   );
                 },
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return Center(
-                      /*  child: Text(
-                      "Today's quote image is not available yet",
-                      textAlign: TextAlign.center,
-                    ),*/
-                      child: Image.network(
-                        noQuoteUrl,
-                        width: double.infinity,
-                        height: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  },
-                ),
               ),
             ),
           ),
+          //  ),
         ],
       ),
     );

@@ -184,7 +184,7 @@ class MainScaffold extends StatefulWidget {
 
 class _MainScaffoldState extends State<MainScaffold> {
   int _selectedIndex = 0;
-  Uint8List? _aboutImageBytes;
+
   String? _aboutHeaderUrl;
 
   @override
@@ -270,7 +270,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     HomePage(aboutHeaderUrl: _aboutHeaderUrl),
     const MyPage(),
     const ResourceGrid(),
-    const Center(child: Text("About Page")),
+    const Center(child: Text("About Page - Version 1.0")),
   ];
 
   @override
@@ -369,45 +369,6 @@ class _MainScaffoldState extends State<MainScaffold> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class AdminLongPressTitle extends StatefulWidget {
-  const AdminLongPressTitle({super.key});
-
-  @override
-  State<AdminLongPressTitle> createState() => AdminLongPressTitleState();
-}
-
-class AdminLongPressTitleState extends State<AdminLongPressTitle> {
-  Timer? _adminTimer;
-  bool _adminPressing = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onLongPressStart: (_) {
-        print("Long press started");
-        _adminPressing = true;
-
-        _adminTimer = Timer(const Duration(seconds: 1), () {
-          if (_adminPressing) {
-            print("Admin unlocked");
-            Navigator.of(context).pushNamed('/admin');
-          }
-        });
-      },
-      onLongPressEnd: (_) {
-        print("Long press ended");
-        _adminPressing = false;
-        _adminTimer?.cancel();
-      },
-      child: const Text(
-        "GM's NonDual Teachings",
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }
