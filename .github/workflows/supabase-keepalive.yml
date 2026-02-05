@@ -1,0 +1,16 @@
+name: Supabase Keep Alive
+
+on:
+  schedule:
+    # Runs every 2 days at 02:00 UTC (~7:30 AM IST)
+    - cron: '0 2 */2 * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Supabase REST API
+        run: |
+          curl -i https://rvevlngiswoduyxwetsb.supabase.co/rest/v1/
