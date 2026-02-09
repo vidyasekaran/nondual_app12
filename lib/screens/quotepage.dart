@@ -37,7 +37,7 @@ class QuotePage extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           AspectRatio(
-            aspectRatio: 3 / 2,
+            aspectRatio: 4 / 3, // previously 3/2
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
 

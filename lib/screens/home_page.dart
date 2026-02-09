@@ -50,13 +50,13 @@ class _HomePageState extends State<HomePage> {
                 showDialog(
                   context: context,
                   builder: (ctx) => AlertDialog(
-                    title: const Text(" 2026 Calendar"),
+                    title: const Text(" GM's Calendar"),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ListTile(
                           leading: const Icon(Icons.picture_as_pdf),
-                          title: const Text("2026 Calendar"),
+                          title: const Text("GM's Calendar"),
                           onTap: () async {
                             const url =
                                 'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/calander/cover.pdf';

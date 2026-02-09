@@ -6,7 +6,8 @@ final List<Book> books = [
     image: "assets/images/bookfront.jpg",
     language: "English",
     links: {
-      "Amazon": "https://amzn.in/d/imXf5hz",
+      "Amazon India": "https://amzn.in/d/imXf5hz",
+      "Amazon USA": "https://www.amazon.com/dp/B0BMY58QVZ",
       "Flipkart":
           "https://www.flipkart.com/know-your-supreme-richness-absolute-non-dual-teachings-straight-source/p/itmc6a2768aa2e19",
       "Kobo": "https://www.kobo.com/in/en/ebook/know-your-supreme-richness",

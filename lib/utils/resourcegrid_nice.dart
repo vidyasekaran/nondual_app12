@@ -30,18 +30,16 @@ class ResourceGrid extends StatelessWidget {
     final List<Map<String, dynamic>> resources = [
       {
         'icon': Icons.local_florist_outlined,
-        'label': 'Satsang-YouTube',
+        'label': 'GM Teachings-YouTube',
         'onTap': (BuildContext context) {
           showYoutubeBottomSheet(context);
         },
       },
       {
         'icon': Icons.music_note_outlined,
-        'label': 'Satsang-Spotify',
+        'label': 'GM Teachings-Spotify',
         'onTap': (BuildContext context) {
-          _launchUrl(
-            'https://open.spotify.com/show/3diTrqSFWQfbpalggpakuO?si=b9c87030fc1d41a2',
-          );
+          showSpotifyBottomSheet(context);
         },
       },
       {
@@ -219,6 +217,47 @@ class _AnimatedResourceCardState extends State<_AnimatedResourceCard> {
       ),
     );
   }
+}
+
+void showSpotifyBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (_) {
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "Spotify Resources",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+
+            ...spotifyLinks.map((item) {
+              return ListTile(
+                leading: const Icon(
+                  Icons.music_note_outlined,
+                  color: Colors.green,
+                ),
+                title: Text(item.title),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final url = Uri.parse(item.url);
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                },
+              );
+            }).toList(),
+          ],
+        ),
+      );
+    },
+  );
 }
 
 void showYoutubeBottomSheet(BuildContext context) {
