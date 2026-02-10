@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nondual_app/data/books_data.dart';
 import 'package:nondual_app/data/youtube_links.dart';
 import 'package:nondual_app/model/gm_gpt_model.dart';
@@ -29,22 +30,23 @@ class ResourceGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> resources = [
       {
-        'icon': Icons.local_florist_outlined,
-        'label': 'GM Teachings-YouTube',
+        'icon': FontAwesomeIcons.youtube,
+        'label': 'GM Teachings',
+
         'onTap': (BuildContext context) {
           showYoutubeBottomSheet(context);
         },
       },
       {
-        'icon': Icons.music_note_outlined,
-        'label': 'GM Teachings-Spotify',
+        'icon': FontAwesomeIcons.spotify,
+        'label': 'GM Teachings',
         'onTap': (BuildContext context) {
           showSpotifyBottomSheet(context);
         },
       },
       {
         'icon': Icons.public,
-        'label': 'Website & Q&A',
+        'label': 'Website',
         'onTap': (BuildContext context) {
           showWebLinksBottomSheet(context);
         },
