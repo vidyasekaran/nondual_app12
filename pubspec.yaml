@@ -91,12 +91,14 @@ flutter_launcher_icons:
 flutter:
   assets:
     - assets/images/
+    - assets/images/quotes/
     - assets/images/seperator.png
     - assets/audio/ilnoor-thoughts-v3.mp3
     - assets/text/coreteaching.txt
     - assets/text/aboutgm.txt
     - assets/text/teaching1.txt
     - assets/text/teaching2.txt
+    - assets/text/teaching3.txt
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

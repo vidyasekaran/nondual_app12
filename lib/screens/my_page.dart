@@ -13,10 +13,14 @@ class MyPage extends StatelessWidget {
     return await rootBundle.loadString('assets/text/teaching2.txt');
   }
 
+  Future<String> loadTeaching3() async {
+    return await rootBundle.loadString('assets/text/teaching3.txt');
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.wait([loadTeaching1(), loadTeaching2()]),
+      future: Future.wait([loadTeaching1(), loadTeaching2(), loadTeaching3()]),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
@@ -24,6 +28,7 @@ class MyPage extends StatelessWidget {
 
         final teaching1 = snapshot.data![0];
         final teaching2 = snapshot.data![1];
+         final teaching3 = snapshot.data![2];
 
         return SingleChildScrollView(
           child: Padding(
@@ -98,7 +103,7 @@ class MyPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           title: Text(
-                            "1. IAM THE SOURCE OF ALL.!",
+                            "JUST NOW YOU ARE THAT!",
                             style: GoogleFonts.inter(
                               fontSize: 15,
                               height: 1.5,
@@ -131,7 +136,6 @@ class MyPage extends StatelessWidget {
                           ],
                         ),
 
-                        // Teaching 2 (Expandable Tile)
                         ExpansionTile(
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 8,
@@ -148,7 +152,7 @@ class MyPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           title: Text(
-                            "2. STILLNESS IS THE WAY TO THE SUPREME.!",
+                            "YOU ARE EVER PRESENT HERE !",
                             style: GoogleFonts.inter(
                               fontSize: 15,
                               height: 1.5,
@@ -158,6 +162,7 @@ class MyPage extends StatelessWidget {
                               ), // Dark green for better readability
                               letterSpacing: 0.3,
                             ),
+                            textAlign: TextAlign.left,
                           ),
 
                           children: [
@@ -174,17 +179,72 @@ class MyPage extends StatelessWidget {
                                   ), // Dark green for better readability
                                   letterSpacing: 0.2,
                                 ),
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.left,
                               ),
                             ),
                           ],
                         ),
+
+
+
+          ExpansionTile(
+                          tilePadding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          textColor: const Color(
+                            0xFF0D4F1C,
+                          ), // Dark green for better readability
+                          iconColor: const Color(0xFF0D4F1C),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          collapsedShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          title: Text(
+                            "CONSCIOUSNESS AND THE FORM !",
+                            style: GoogleFonts.inter(
+                              fontSize: 15,
+                              height: 1.5,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(
+                                0xFF0D4F1C,
+                              ), // Dark green for better readability
+                              letterSpacing: 0.3,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12),
+                              child: Text(
+                                teaching3,
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  height: 1.6,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(
+                                    0xFF0D4F1C,
+                                  ), // Dark green for better readability
+                                  letterSpacing: 0.2,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        ),
+
                       ],
+                      
                     ),
                   ),
                 ),
 
                 const SizedBox(height: 24),
+
+                
               ],
             ),
           ),

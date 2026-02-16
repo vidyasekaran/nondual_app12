@@ -93,30 +93,65 @@ class _AdminPageState extends State<AdminPage> {
         imageBytes = bytes;
       });
 
+      // Extract file extension from the picked file
+      final fileName = pickedFile.name;
+      final extension = fileName.contains('.')
+          ? fileName.substring(fileName.lastIndexOf('.'))
+          : '.jpg'; // Default to .jpg if no extension found
+
       // Upload the image to Supabase Storage
-      await uploadImage(bytes);
+      await uploadImage(bytes, extension);
     }
   }
 
-  Future<void> uploadImage(Uint8List bytes) async {
+  Future<void> uploadImage(Uint8List bytes, String extension) async {
     try {
-      final today = DateTime.now();
-      final date =
-          '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+      // Use 'todayquote' as filename with the original extension
+      final path = 'quote/todayquote$extension';
 
-      final path = 'quote/$date.jpg';
+      // Delete any existing todayquote files (with any extension)
+      try {
+        final files = await supabase.storage.from('quote').list(path: 'quote');
+        final todayquoteFiles = files
+            .where((f) => f.name.startsWith('todayquote'))
+            .map((f) => 'quote/${f.name}')
+            .toList();
+        
+        if (todayquoteFiles.isNotEmpty) {
+          await supabase.storage.from('quote').remove(todayquoteFiles);
+        }
+      } catch (e) {
+        // Ignore errors when deleting (file might not exist)
+      }
 
-      // 🔥 Always delete first
-      await supabase.storage.from('quote').remove([path]);
+      // Determine content type based on extension
+      String contentType;
+      switch (extension.toLowerCase()) {
+        case '.jpg':
+        case '.jpeg':
+          contentType = 'image/jpeg';
+          break;
+        case '.png':
+          contentType = 'image/png';
+          break;
+        case '.gif':
+          contentType = 'image/gif';
+          break;
+        case '.webp':
+          contentType = 'image/webp';
+          break;
+        default:
+          contentType = 'image/jpeg'; // Default fallback
+      }
 
-      // 🔥 Then upload
+      // Upload with the new filename
       await supabase.storage
           .from('quote')
           .uploadBinary(
             path,
             bytes,
-            fileOptions: const FileOptions(
-              contentType: 'image/jpeg',
+            fileOptions: FileOptions(
+              contentType: contentType,
               cacheControl: 'no-cache',
             ),
           );
@@ -129,7 +164,7 @@ class _AdminPageState extends State<AdminPage> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Image overwritten successfully')),
+        const SnackBar(content: Text('Image uploaded as todayquote successfully')),
       );
     } catch (e) {
       ScaffoldMessenger.of(
