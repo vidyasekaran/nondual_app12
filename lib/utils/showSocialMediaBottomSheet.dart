@@ -17,12 +17,24 @@ class SocialLink {
 }
 
 final List<SocialLink> socialLinks = [
-  SocialLink(
+  /* SocialLink(
     title: 'WhatsApp Community',
     url: 'https://chat.whatsapp.com/FRefNheLZbQAHAfaIL2SwA',
     icon: Icons.groups,
     color: Colors.green,
   ),
+  SocialLink(
+    title: 'Telegram Channel',
+    url: 'https://web.telegram.org/k/#@ialoneprevail',
+    icon: Icons.send,
+    color: Colors.lightBlue,
+  ),
+  SocialLink(
+    title: 'Instagram',
+    url: 'https://www.instagram.com/gm_quotes_non_dual/',
+    icon: Icons.camera_alt_outlined, // closest Material icon
+    color: Colors.purple,
+  ),*/
   SocialLink(
     title: 'Facebook-English',
     url: 'https://www.facebook.com/share/g/1B73HtPCbX/?mibextid=wwXIfr',
@@ -40,18 +52,6 @@ final List<SocialLink> socialLinks = [
     url: 'https://x.com/TeachingsGM?t=hpyS6jYF8JZw2tbQunxWtg&s=09',
     icon: FontAwesomeIcons.xTwitter,
     color: Colors.black,
-  ),
-  SocialLink(
-    title: 'Telegram Channel',
-    url: 'https://web.telegram.org/k/#@ialoneprevail',
-    icon: Icons.send,
-    color: Colors.lightBlue,
-  ),
-  SocialLink(
-    title: 'Instagram',
-    url: 'https://www.instagram.com/gm_quotes_non_dual/',
-    icon: Icons.camera_alt_outlined, // closest Material icon
-    color: Colors.purple,
   ),
 ];
 

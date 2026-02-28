@@ -31,43 +31,47 @@ class ResourceGrid extends StatelessWidget {
     final List<Map<String, dynamic>> resources = [
       {
         'icon': FontAwesomeIcons.youtube,
+        'iconColor': const Color(0xFFFF0000), // YouTube red
         'label': 'GM Teachings',
-
         'onTap': (BuildContext context) {
           showYoutubeBottomSheet(context);
         },
       },
       {
         'icon': FontAwesomeIcons.spotify,
+        'iconColor': const Color(0xFF1DB954), // Spotify green
         'label': 'GM Teachings',
         'onTap': (BuildContext context) {
           showSpotifyBottomSheet(context);
         },
       },
       {
-        'icon': Icons.public,
+        'icon': FontAwesomeIcons.globe,
+        'iconColor': const Color(0xFF4285F4), // Web blue
         'label': 'Website',
         'onTap': (BuildContext context) {
           showWebLinksBottomSheet(context);
         },
       },
-
       {
-        'icon': Icons.share_outlined,
+        'icon': FontAwesomeIcons.shareNodes,
+        'iconColor': const Color(0xFFE1306C), // Social/Instagram pink
         'label': 'Social Media',
         'onTap': (BuildContext context) {
           showSocialMediaBottomSheet(context);
         },
       },
       {
-        'icon': Icons.shopping_cart_outlined,
+        'icon': FontAwesomeIcons.amazon,
+        'iconColor': const Color(0xFFFF9900), // Amazon orange
         'label': 'Buy Book',
         'onTap': (BuildContext context) {
-          showBooksBottomSheet(context); // ✅ correct place
+          showBooksBottomSheet(context);
         },
       },
       {
-        'icon': Icons.smart_toy_outlined,
+        'icon': FontAwesomeIcons.robot,
+        'iconColor': const Color(0xFF10A37F), // AI/ChatGPT green
         'label': 'GM GPT (AI)',
         'onTap': (BuildContext context) {
           showGmGptBottomSheet(context);
@@ -93,6 +97,7 @@ class ResourceGrid extends StatelessWidget {
         final item = resources[index];
         return _AnimatedResourceCard(
           icon: item['icon'],
+          iconColor: item['iconColor'] as Color?,
           label: item['label'],
           url: item['url'], // can be null
           cardColor: cardColor,
@@ -114,6 +119,7 @@ class ResourceGrid extends StatelessWidget {
 
 class _AnimatedResourceCard extends StatefulWidget {
   final IconData icon;
+  final Color? iconColor;
   final String label;
   final String? url; // nullable
   final Color cardColor;
@@ -123,6 +129,7 @@ class _AnimatedResourceCard extends StatefulWidget {
 
   const _AnimatedResourceCard({
     required this.icon,
+    this.iconColor,
     required this.label,
     required this.url,
     required this.cardColor,
@@ -193,12 +200,13 @@ class _AnimatedResourceCardState extends State<_AnimatedResourceCard> {
                     ),
                   ),
                   child: Center(
-                    child: Icon(
+                    child: FaIcon(
                       widget.icon,
                       size: 34,
-                      color: widget.isDark
-                          ? Colors.grey.shade300
-                          : Colors.grey.shade700,
+                      color: widget.iconColor ??
+                          (widget.isDark
+                              ? Colors.grey.shade300
+                              : Colors.grey.shade700),
                     ),
                   ),
                 ),

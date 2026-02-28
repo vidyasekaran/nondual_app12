@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nondual_app/screens/about_gm.dart';
-import 'package:nondual_app/screens/quotepage.dart';
+
+import 'package:nondual_app/screens/todaysquote.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:typed_data';
+
 import '../utils/adminlongpresstitle.dart';
 import '../utils/resourcegrid_nice.dart';
 import 'my_page.dart';
+import 'package:just_audio/just_audio.dart';
 
 class HomePage extends StatefulWidget {
   final String? aboutHeaderUrl;
@@ -18,6 +20,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final AudioPlayer _player = AudioPlayer();
+  String? _currentlyPlayingPath;
+
+  Future<void> _toggleAudio(String path) async {
+    if (_currentlyPlayingPath != path) {
+      await _player.setAsset(path);
+      await _player.play();
+      setState(() {
+        _currentlyPlayingPath = path;
+      });
+    } else {
+      if (_player.playing) {
+        await _player.pause();
+      } else {
+        await _player.play();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,9 +155,113 @@ class _HomePageState extends State<HomePage> {
                   ),
                 AboutGMPage(),
 
-                QuotePage(),
-
+                // QuotePage(),
+                TodaysQuote(),
                 MyPage(),
+                Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(
+                        255,
+                        36,
+                        199,
+                        99,
+                      ), // 👈 background color
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        dividerColor:
+                            Colors.transparent, // 👈 removes top & bottom lines
+                      ),
+                      child: ExpansionTile(
+                        trailing: Image.asset(
+                          "assets/images/down.png",
+                          width: 28,
+                          height: 28,
+                        ),
+                        collapsedIconColor: Colors.white,
+                        iconColor: Colors.white,
+                        leading: const Icon(Icons.spa, color: Colors.white),
+                        title: const Text(
+                          'Guided Meditation',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        children: [
+                          /*ListTile(
+                      title: const Text('About Thoughts'),
+                      trailing: const Icon(Icons.play_arrow),
+                      onTap: () {
+                        _playAudio('assets/audio/ilnoor-thoughts-v3.mp3');
+                      },
+                    ),
+                    ListTile(
+                      title: const Text('Neutral Observer'),
+                      trailing: const Icon(Icons.play_arrow),
+                      onTap: () {
+                        _playAudio('assets/audio/2025_04_10_11_55_31-v2.mp3');
+                      },
+                    ),*/
+                          ListTile(
+                            title: const Text('About Thoughts'),
+                            trailing: StreamBuilder<PlayerState>(
+                              stream: _player.playerStateStream,
+                              builder: (context, snapshot) {
+                                final playing = snapshot.data?.playing ?? false;
+
+                                final isThisPlaying =
+                                    _currentlyPlayingPath ==
+                                    'assets/audio/ilnoor-thoughts-v3.mp3';
+
+                                return Icon(
+                                  isThisPlaying && playing
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                );
+                              },
+                            ),
+                            onTap: () {
+                              _toggleAudio(
+                                'assets/audio/ilnoor-thoughts-v3.mp3',
+                              );
+                            },
+                          ),
+
+                          ListTile(
+                            title: const Text('Highest State'),
+                            trailing: StreamBuilder<PlayerState>(
+                              stream: _player.playerStateStream,
+                              builder: (context, snapshot) {
+                                final playing = snapshot.data?.playing ?? false;
+
+                                final isThisPlaying =
+                                    _currentlyPlayingPath ==
+                                    'assets/audio/2025_04_10_11_55_31-v2.mp3';
+
+                                return Icon(
+                                  isThisPlaying && playing
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                );
+                              },
+                            ),
+                            onTap: () {
+                              _toggleAudio(
+                                'assets/audio/2025_04_10_11_55_31-v2.mp3',
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
                 const AllQuotesGallery(),
                 Padding(
                   padding: const EdgeInsets.all(16),
@@ -175,7 +306,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "Resources Library",
+                                "🌻 Resource Library",
                                 style: GoogleFonts.inter(
                                   fontSize: 20,
                                   height: 1.2,
@@ -274,7 +405,7 @@ class AllQuotesGallery extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "All Quotes",
+                    "🪷 GM's Quotes",
                     style: GoogleFonts.inter(
                       fontSize: 20,
                       height: 1.2,

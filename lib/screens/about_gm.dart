@@ -49,11 +49,11 @@ class EventCard extends StatelessWidget {
       "No objects here! Only pure Presence!\n...GM...",
       "Your Consciousness is Infinite Beyond Boundaries..!\n...GM...",
       "At the Awareness level...You are Total...The Wholeness..!\n...GM...",
-      "Better remain Conscious and Know what you are exactly!\n...GM...",  
+      "Better remain Conscious and Know what you are exactly!\n...GM...",
       "When your Consciousness merges with its source..it transcends itself and knows its Eternity Forever!\n...GM...",
       "Non Dual is Unmoving, Indescribable...Complete by itself!\n...GM...",
       "Your 'Iam ness' Consciousness is Incomplete at the Personality Level.!\n...GM...",
-      "In Non dual there is nothing here other than Me !\n...GM..",
+      "In Non dual there is nothing here other than Me !\n...GM...",
       "Absolute - Non Dual.! There is no division.!\n...GM...",
       "Awareness is the Observer of the Self and its play!\n...GM...",
       "Awareness Observes.! Consciousness Manifests.! \n...GM...",
@@ -111,19 +111,16 @@ class EventCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "About GM",
+            " About GM",
             style: GoogleFonts.inter(
               fontSize: 20,
               height: 1.2,
               fontWeight: FontWeight.bold,
-              color: const Color(
-                0xFF0D4F1C,
-              ), // Dark green for better readability
+              color: const Color(0xFF0D4F1C),
               letterSpacing: 0.5,
             ),
             textAlign: TextAlign.center,
           ),
-
           const SizedBox(height: 10),
 
           FutureBuilder<String>(
@@ -169,7 +166,8 @@ class EventCard extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 20),
-                  ExpansionTile(
+
+                  /*   ExpansionTile(
                     tilePadding: const EdgeInsets.symmetric(
                       horizontal: 8,
                       vertical: 4,
@@ -216,6 +214,62 @@ class EventCard extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),*/
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        dividerColor:
+                            Colors.transparent, // removes default line
+                      ),
+                      child: ExpansionTile(
+                        trailing: Image.asset(
+                          "assets/images/down.png",
+                          width: 28,
+                          height: 28,
+                        ),
+                        childrenPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+
+                        collapsedIconColor: const Color(0xFF0D4F1C),
+                        iconColor: const Color(0xFF0D4F1C),
+
+                        title: Text(
+                          quotes[Random().nextInt(quotes.length)],
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF0D4F1C),
+                          ),
+                        ),
+
+                        children: [
+                          Text(
+                            aboutGM,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              fontSize: 14,
+                              height: 1.6,
+                              color: const Color(0xFF0D4F1C),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               );

@@ -12,14 +12,14 @@ class TodaysQuote extends StatefulWidget {
 class _TodaysQuoteState extends State<TodaysQuote> {
   String? imageUrl;
   bool isLoading = true;
-  final noQuoteUrl = '';
+  final noQuoteUrl = 'assets/images/quotes/1.jpeg';
 
   @override
   void initState() {
     super.initState();
     _loadTodayQuote();
   }
-
+  /*
   Future<void> _loadTodayQuote() async {
     try {
       final supabase = Supabase.instance.client;
@@ -69,6 +69,42 @@ class _TodaysQuoteState extends State<TodaysQuote> {
         isLoading = false;
       });
     }
+  }*/
+
+  /*
+Bucket & Folder name is → quote So final path: quote/quote/todayquote.jpg
+
+*/
+
+  Future<void> _loadTodayQuote() async {
+    try {
+      final supabase = Supabase.instance.client;
+
+      // List files inside folder "quote"
+      final files = await supabase.storage.from('quote').list(path: 'quote');
+
+      // Find file that starts with "todayquote"
+      final file = files.firstWhere(
+        (f) => f.name.startsWith('todayquote'),
+        orElse: () => throw Exception('File not found'),
+      );
+
+      final selectedPath = 'quote/${file.name}';
+
+      final publicUrl = supabase.storage
+          .from('quote')
+          .getPublicUrl(selectedPath);
+
+      setState(() {
+        imageUrl = '$publicUrl?t=${DateTime.now().millisecondsSinceEpoch}';
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        imageUrl = null;
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -79,7 +115,7 @@ class _TodaysQuoteState extends State<TodaysQuote> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "Today's Quote",
+            "🌼 Today's Quote",
             style: GoogleFonts.inter(
               fontSize: 20,
               height: 1.5,
@@ -96,32 +132,32 @@ class _TodaysQuoteState extends State<TodaysQuote> {
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : imageUrl != null
-                      ? Image.network(
-                          imageUrl!,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          },
-                          errorBuilder: (context, error, stackTrace) {
-                            // Show fallback image on error
-                            return Center(
-                              child: Image.asset(
-                                noQuoteUrl,
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                            );
-                          },
-                        )
-                      : Image.asset(
-                          noQuoteUrl,
-                          width: double.infinity,
-                          height: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
+                  ? Image.network(
+                      imageUrl!,
+                      fit: BoxFit.contain,
+                      alignment: Alignment.center,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        // Show fallback image on error
+                        return Center(
+                          child: Image.asset(
+                            noQuoteUrl,
+                            width: double.infinity,
+                            height: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      },
+                    )
+                  : Image.asset(
+                      noQuoteUrl,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
         ],
@@ -129,4 +165,3 @@ class _TodaysQuoteState extends State<TodaysQuote> {
     );
   }
 }
-

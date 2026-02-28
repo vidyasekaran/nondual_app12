@@ -28,7 +28,7 @@ class MyPage extends StatelessWidget {
 
         final teaching1 = snapshot.data![0];
         final teaching2 = snapshot.data![1];
-         final teaching3 = snapshot.data![2];
+        final teaching3 = snapshot.data![2];
 
         return SingleChildScrollView(
           child: Padding(
@@ -72,7 +72,7 @@ class MyPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Core Teachings of GM",
+                          "🪷 Core Teachings of GM",
                           style: GoogleFonts.inter(
                             fontSize: 20,
                             height: 1.2,
@@ -88,6 +88,12 @@ class MyPage extends StatelessWidget {
                         const SizedBox(height: 28),
 
                         ExpansionTile(
+                          trailing: Image.asset(
+                            "assets/images/down.png",
+                            width: 28,
+                            height: 28,
+                          ),
+
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 8,
                             vertical: 4,
@@ -137,6 +143,12 @@ class MyPage extends StatelessWidget {
                         ),
 
                         ExpansionTile(
+                          trailing: Image.asset(
+                            "assets/images/down.png",
+                            width: 28,
+                            height: 28,
+                          ),
+
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 8,
                             vertical: 4,
@@ -185,9 +197,12 @@ class MyPage extends StatelessWidget {
                           ],
                         ),
 
-
-
-          ExpansionTile(
+                        ExpansionTile(
+                          trailing: Image.asset(
+                            "assets/images/down.png",
+                            width: 28,
+                            height: 28,
+                          ),
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 8,
                             vertical: 4,
@@ -235,16 +250,12 @@ class MyPage extends StatelessWidget {
                             ),
                           ],
                         ),
-
                       ],
-                      
                     ),
                   ),
                 ),
 
                 const SizedBox(height: 24),
-
-                
               ],
             ),
           ),

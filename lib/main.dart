@@ -116,7 +116,7 @@ class _AdminPageState extends State<AdminPage> {
             .where((f) => f.name.startsWith('todayquote'))
             .map((f) => 'quote/${f.name}')
             .toList();
-        
+
         if (todayquoteFiles.isNotEmpty) {
           await supabase.storage.from('quote').remove(todayquoteFiles);
         }
@@ -164,7 +164,9 @@ class _AdminPageState extends State<AdminPage> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Image uploaded as todayquote successfully')),
+        const SnackBar(
+          content: Text('Image uploaded as todayquote successfully'),
+        ),
       );
     } catch (e) {
       ScaffoldMessenger.of(
@@ -305,7 +307,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     HomePage(aboutHeaderUrl: _aboutHeaderUrl),
     const MyPage(),
     const ResourceGrid(),
-    const Center(child: Text("About Page - Version 1.0")),
+    const Center(child: Text("About Page - Version 2.1")),
   ];
 
   @override

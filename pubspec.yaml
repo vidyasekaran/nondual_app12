@@ -45,8 +45,6 @@ dependencies:
 
 
 
-
-
 fonts:
     - family: PlayfairDisplay
       fonts:
@@ -92,8 +90,11 @@ flutter:
   assets:
     - assets/images/
     - assets/images/quotes/
+    - assets/images/youtube.png
     - assets/images/seperator.png
+    - assets/images/down.png
     - assets/audio/ilnoor-thoughts-v3.mp3
+    - assets/audio/2025_04_10_11_55_31-v2.mp3
     - assets/text/coreteaching.txt
     - assets/text/aboutgm.txt
     - assets/text/teaching1.txt
