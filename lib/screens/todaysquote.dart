@@ -115,9 +115,9 @@ Bucket & Folder name is → quote So final path: quote/quote/todayquote.jpg
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "🌼 Today's Quote",
+            "🌼 GM 's Eternal Quotes",
             style: GoogleFonts.inter(
-              fontSize: 20,
+              fontSize: 18,
               height: 1.5,
               fontWeight: FontWeight.bold,
               color: const Color(0xFF0D4F1C),

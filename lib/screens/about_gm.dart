@@ -43,10 +43,6 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final quotes = [
-      "No Persons here! Only pure Presence!\n ...GM...",
-      "No events here! Only pure Presence!\n ...GM...",
-      "No time here! Only pure Presence!\n...GM...",
-      "No objects here! Only pure Presence!\n...GM...",
       "Your Consciousness is Infinite Beyond Boundaries..!\n...GM...",
       "At the Awareness level...You are Total...The Wholeness..!\n...GM...",
       "Better remain Conscious and Know what you are exactly!\n...GM...",
@@ -113,7 +109,7 @@ class EventCard extends StatelessWidget {
           Text(
             " About GM",
             style: GoogleFonts.inter(
-              fontSize: 20,
+              fontSize: 18,
               height: 1.2,
               fontWeight: FontWeight.bold,
               color: const Color(0xFF0D4F1C),
@@ -157,8 +153,9 @@ class EventCard extends StatelessWidget {
                                     );
                                   },
                               errorBuilder: (context, error, stackTrace) {
-                                return const Center(
-                                  child: Icon(Icons.person, size: 40),
+                                return Image.asset(
+                                  'assets/images/GM_Photo.png',
+                                  fit: BoxFit.cover,
                                 );
                               },
                             ),

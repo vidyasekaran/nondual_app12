@@ -25,7 +25,7 @@ class GMDetailsBottomSheet extends StatelessWidget {
 
                 Text(
                   "About GM",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
 
                 SizedBox(height: 16),

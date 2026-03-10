@@ -38,7 +38,7 @@ class AdminLongPressTitleState extends State<AdminLongPressTitle> {
           Text(
             "GM's NonDual Teachings",
             style: GoogleFonts.inter(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: const Color.fromARGB(255, 239, 241, 237),
               letterSpacing: 0.5,

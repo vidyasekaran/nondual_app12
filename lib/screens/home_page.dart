@@ -1,5 +1,10 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:nondual_app/screens/about_gm.dart';
+import 'package:nondual_app/screens/question_answer.dart';
 
 import 'package:nondual_app/screens/todaysquote.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,10 +24,111 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+String _formatDuration(Duration d) {
+  final mins = d.inMinutes;
+  final secs = d.inSeconds.remainder(60);
+  return '${mins}:${secs.toString().padLeft(2, '0')}';
+}
+
+class _MeditationPlayerProgress extends StatefulWidget {
+  final AudioPlayer player;
+
+  const _MeditationPlayerProgress({required this.player});
+
+  @override
+  State<_MeditationPlayerProgress> createState() =>
+      _MeditationPlayerProgressState();
+}
+
+class _MeditationPlayerProgressState extends State<_MeditationPlayerProgress> {
+  StreamSubscription<Duration>? _positionSub;
+  StreamSubscription<Duration?>? _durationSub;
+
+  @override
+  void initState() {
+    super.initState();
+    _positionSub = widget.player.positionStream.listen((_) {
+      if (mounted) setState(() {});
+    });
+    _durationSub = widget.player.durationStream.listen((_) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _positionSub?.cancel();
+    _durationSub?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final position = widget.player.position;
+    final duration = widget.player.duration ?? Duration.zero;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              activeTrackColor: Colors.white,
+              inactiveTrackColor: Colors.white.withOpacity(0.4),
+              thumbColor: Colors.white,
+              overlayColor: Colors.white.withOpacity(0.2),
+            ),
+            child: Slider(
+              value: duration.inMilliseconds > 0
+                  ? position.inMilliseconds
+                        .clamp(0, duration.inMilliseconds)
+                        .toDouble()
+                  : 0,
+              min: 0,
+              max: duration.inMilliseconds > 0
+                  ? duration.inMilliseconds.toDouble()
+                  : 1,
+              onChanged: (value) {
+                widget.player.seek(Duration(milliseconds: value.round()));
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  _formatDuration(position),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  _formatDuration(duration),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _HomePageState extends State<HomePage> {
   final AudioPlayer _player = AudioPlayer();
   String? _currentlyPlayingPath;
 
+  // ignore: unused_element
   Future<void> _toggleAudio(String path) async {
     if (_currentlyPlayingPath != path) {
       await _player.setAsset(path);
@@ -158,16 +264,18 @@ class _HomePageState extends State<HomePage> {
                 // QuotePage(),
                 TodaysQuote(),
                 MyPage(),
+                QAPage(),
                 Padding(
                   padding: const EdgeInsets.all(32),
                   child: Container(
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(
                         255,
-                        36,
-                        199,
-                        99,
-                      ), // 👈 background color
+                        112,
+                        202,
+                        115,
+                      ), // lighter green, similar to Teachings
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Theme(
@@ -181,33 +289,100 @@ class _HomePageState extends State<HomePage> {
                           width: 28,
                           height: 28,
                         ),
-                        collapsedIconColor: Colors.white,
-                        iconColor: Colors.white,
-                        leading: const Icon(Icons.spa, color: Colors.white),
-                        title: const Text(
-                          'Guided Meditation',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                        tilePadding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        title: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "🌼 GM's Eternal Guided Meditation",
+                            style: GoogleFonts.inter(
+                              fontSize: 18,
+                              height: 1.2,
+                              fontWeight: FontWeight.bold,
+                              color: const Color(
+                                0xFFE8F5E9,
+                              ), // light green for dark background
+                              letterSpacing: 0.5,
+                            ),
+                            textAlign: TextAlign.left,
                           ),
                         ),
                         children: [
-                          /*ListTile(
-                      title: const Text('About Thoughts'),
-                      trailing: const Icon(Icons.play_arrow),
-                      onTap: () {
-                        _playAudio('assets/audio/ilnoor-thoughts-v3.mp3');
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('Neutral Observer'),
-                      trailing: const Icon(Icons.play_arrow),
-                      onTap: () {
-                        _playAudio('assets/audio/2025_04_10_11_55_31-v2.mp3');
-                      },
-                    ),*/
                           ListTile(
+                            title: const Text(
+                              'Know the Unending Love beyond words.!',
+                            ),
+                            trailing: const Icon(Icons.play_arrow),
+                            onTap: () {
+                              openPodcast(
+                                "https://open.spotify.com/episode/4WOUCWZxz3FwUViAKClX4J",
+                              );
+                            },
+                          ),
+
+                          ListTile(
+                            title: const Text(
+                              'Know the infinity of the Non Dual Reality.!',
+                            ),
+                            trailing: const Icon(Icons.play_arrow),
+                            onTap: () {
+                              openPodcast(
+                                "https://open.spotify.com/episode/0oqE8lGPAHVw5sJRR4gDLo",
+                              );
+                            },
+                          ),
+
+                          ListTile(
+                            title: const Text(
+                              'Settle Inwardly Where You are Already.!',
+                            ),
+                            trailing: const Icon(Icons.play_arrow),
+                            onTap: () {
+                              openPodcast(
+                                "https://open.spotify.com/episode/53TA6W7PxRZW22tFO4Aj4A",
+                              );
+                            },
+                          ),
+
+                          ListTile(
+                            title: const Text(
+                              'Inwardly You are Already That and Always That.!',
+                            ),
+                            trailing: const Icon(Icons.play_arrow),
+                            onTap: () {
+                              openPodcast(
+                                "https://open.spotify.com/episode/1RhI9ulmhRW4tlc6OcNBGB",
+                              );
+                            },
+                          ),
+
+                          ListTile(
+                            title: const Text(
+                              'Settle Inwardly Where You are Already.!',
+                            ),
+                            trailing: const Icon(Icons.play_arrow),
+                            onTap: () {
+                              openPodcast(
+                                "https://open.spotify.com/episode/53TA6W7PxRZW22tFO4Aj4A",
+                              );
+                            },
+                          ),
+
+                          ListTile(
+                            title: const Text(
+                              'Stay beyond words and Observe Silently.!',
+                            ),
+                            trailing: const Icon(Icons.play_arrow),
+                            onTap: () {
+                              openPodcast(
+                                "https://open.spotify.com/episode/5zIkKQJg4sPCXWRoWD3ePU",
+                              );
+                            },
+                          ),
+
+                          /*   ListTile(
                             title: const Text('About Thoughts'),
                             trailing: StreamBuilder<PlayerState>(
                               stream: _player.playerStateStream,
@@ -256,6 +431,8 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                           ),
+                          if (_currentlyPlayingPath != null)
+                            _MeditationPlayerProgress(player: _player),*/
                         ],
                       ),
                     ),
@@ -308,7 +485,7 @@ class _HomePageState extends State<HomePage> {
                               Text(
                                 "🌻 Resource Library",
                                 style: GoogleFonts.inter(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   height: 1.2,
                                   fontWeight: FontWeight.bold,
                                   color: const Color(
@@ -338,27 +515,104 @@ class _HomePageState extends State<HomePage> {
 }
 
 Future<List<String>> fetchAllQuoteImages() async {
-  final supabase = Supabase.instance.client;
+  try {
+    final supabase = Supabase.instance.client;
+    final files = await supabase.storage.from('quote').list(path: 'allquotes');
 
-  final files = await supabase.storage.from('quote').list(path: 'allquotes');
+    final imageUrls = files
+        .where(
+          (f) =>
+              f.name.endsWith('.jpeg') ||
+              f.name.endsWith('.jpg') ||
+              f.name.endsWith('.png'),
+        )
+        .map(
+          (f) =>
+              '${supabase.storage.from('quote').getPublicUrl('allquotes/${f.name}')}?v=${f.name}',
+        )
+        .toSet()
+        .toList();
 
-  final imageUrls = files
+    imageUrls.shuffle();
+    if (imageUrls.isNotEmpty) return imageUrls;
+  } catch (_) {
+    // fall through to offline assets
+  }
+
+  final local = await fetchLocalQuoteAssets();
+  local.shuffle();
+  return local;
+}
+
+Future<List<String>> fetchLocalQuoteAssets() async {
+  final manifestJson = await rootBundle.loadString('AssetManifest.json');
+  final Map<String, dynamic> manifestMap = json.decode(manifestJson);
+  final assets = manifestMap.keys
+      .where((key) => key.startsWith('assets/images/quotes/'))
       .where(
-        (f) =>
-            f.name.endsWith('.jpeg') ||
-            f.name.endsWith('.jpg') ||
-            f.name.endsWith('.png'),
+        (key) =>
+            key.endsWith('.jpeg') || key.endsWith('.jpg') || key.endsWith('.png'),
       )
-      .map(
-        (f) =>
-            '${supabase.storage.from('quote').getPublicUrl('allquotes/${f.name}')}?v=${f.name}',
-        //supabase.storage.from('quote').getPublicUrl('allquotes/${f.name}'),
-      )
-      .toSet()
       .toList();
+  assets.sort();
+  return assets;
+}
 
-  imageUrls.shuffle();
-  return imageUrls;
+bool _isNetworkImagePath(String path) =>
+    path.startsWith('http://') || path.startsWith('https://');
+
+Future<List<String>>? _localQuoteAssetsCache;
+Future<List<String>> _getLocalQuoteAssetsCached() =>
+    _localQuoteAssetsCache ??= fetchLocalQuoteAssets();
+
+String? _mapNetworkUrlToLocalAsset(String url, List<String> localAssets) {
+  final uri = Uri.tryParse(url);
+  final last = uri?.pathSegments.isNotEmpty == true ? uri!.pathSegments.last : '';
+  if (last.isEmpty) return null;
+
+  // If Supabase file is `.../allquotes/1.jpeg`, try to match `assets/images/quotes/1.jpeg`
+  for (final a in localAssets) {
+    if (a.endsWith('/$last')) return a;
+  }
+  return null;
+}
+
+Widget _quoteImageWidget(String path, {BoxFit fit = BoxFit.cover}) {
+  if (!_isNetworkImagePath(path)) {
+    return Image.asset(
+      path,
+      key: ValueKey(path),
+      fit: fit,
+      gaplessPlayback: false,
+      errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
+    );
+  }
+
+  return Image.network(
+    path,
+    key: ValueKey(path),
+    fit: fit,
+    gaplessPlayback: false,
+    errorBuilder: (context, error, stackTrace) {
+      return FutureBuilder<List<String>>(
+        future: _getLocalQuoteAssetsCached(),
+        builder: (context, snapshot) {
+          final localAssets = snapshot.data ?? const <String>[];
+          final mapped = _mapNetworkUrlToLocalAsset(path, localAssets);
+          if (mapped != null) {
+            return Image.asset(
+              mapped,
+              key: ValueKey(mapped),
+              fit: fit,
+              gaplessPlayback: false,
+              errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
+            );
+          }
+          return const Icon(Icons.broken_image);
+        },
+      );
+    },
+  );
 }
 
 class AllQuotesGallery extends StatelessWidget {
@@ -379,8 +633,8 @@ class AllQuotesGallery extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    const Color.fromARGB(255, 55, 131, 60), // Much darker green
-                    const Color.fromARGB(255, 42, 126, 46), // Darker green
+                    const Color(0xFFC8E6C9), // lighter green, like other cards
+                    const Color(0xFFB8D9BA),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -405,16 +659,14 @@ class AllQuotesGallery extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "🪷 GM's Quotes",
+                    "🌸 GM's Eternal Quotes",
                     style: GoogleFonts.inter(
-                      fontSize: 20,
+                      fontSize: 18,
                       height: 1.2,
                       fontWeight: FontWeight.bold,
-
-                      //  const Color(0xFFC8E6C9),  const Color(0xFFB8D9BA),
                       color: const Color(
-                        0xFFC8E6C9,
-                      ), // Dark green for better readability
+                        0xFF0D4F1C,
+                      ), // Dark green for good contrast on light background
                       letterSpacing: 0.5,
                     ),
                     textAlign: TextAlign.center,
@@ -451,15 +703,7 @@ class AllQuotesGallery extends StatelessWidget {
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                images[index],
-                                key: ValueKey(images[index]), // 🔑 important
-
-                                fit: BoxFit.cover,
-                                gaplessPlayback: false,
-                                errorBuilder: (_, __, ___) =>
-                                    const Icon(Icons.broken_image),
-                              ),
+                              child: _quoteImageWidget(images[index]),
                             ),
                           );
                         },
@@ -497,11 +741,9 @@ void _showImageViewer(
                 child: InteractiveViewer(
                   minScale: 0.8,
                   maxScale: 4.0,
-                  child: Image.network(
+                  child: _quoteImageWidget(
                     images[index],
-                    key: ValueKey(images[index]),
                     fit: BoxFit.contain,
-                    gaplessPlayback: false,
                   ),
                 ),
               );
@@ -624,5 +866,15 @@ class ExploreItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> openPodcast(String podcastUrl) async {
+  final Uri url = Uri.parse(podcastUrl);
+
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url, mode: LaunchMode.externalApplication);
+  } else {
+    throw 'Could not launch $podcastUrl';
   }
 }

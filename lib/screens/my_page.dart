@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:google_fonts/google_fonts.dart';
 
 class MyPage extends StatelessWidget {
   const MyPage({super.key});
@@ -72,9 +71,9 @@ class MyPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "🪷 Core Teachings of GM",
-                          style: GoogleFonts.inter(
-                            fontSize: 20,
+                          "🏵️ Core Teachings of GM",
+                          style: TextStyle(
+                            fontSize: 18,
                             height: 1.2,
                             fontWeight: FontWeight.bold,
                             color: const Color(
@@ -110,7 +109,7 @@ class MyPage extends StatelessWidget {
                           ),
                           title: Text(
                             "JUST NOW YOU ARE THAT!",
-                            style: GoogleFonts.inter(
+                            style: TextStyle(
                               fontSize: 15,
                               height: 1.5,
                               fontWeight: FontWeight.w600,
@@ -127,7 +126,7 @@ class MyPage extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 12),
                               child: Text(
                                 teaching1,
-                                style: GoogleFonts.inter(
+                                style: TextStyle(
                                   fontSize: 14,
                                   height: 1.6,
                                   fontWeight: FontWeight.w400,
@@ -165,7 +164,7 @@ class MyPage extends StatelessWidget {
                           ),
                           title: Text(
                             "YOU ARE EVER PRESENT HERE !",
-                            style: GoogleFonts.inter(
+                            style: TextStyle(
                               fontSize: 15,
                               height: 1.5,
                               fontWeight: FontWeight.w600,
@@ -182,7 +181,7 @@ class MyPage extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 12),
                               child: Text(
                                 teaching2,
-                                style: GoogleFonts.inter(
+                                style: TextStyle(
                                   fontSize: 14,
                                   height: 1.6,
                                   fontWeight: FontWeight.w400,
@@ -219,7 +218,7 @@ class MyPage extends StatelessWidget {
                           ),
                           title: Text(
                             "CONSCIOUSNESS AND THE FORM !",
-                            style: GoogleFonts.inter(
+                            style: TextStyle(
                               fontSize: 15,
                               height: 1.5,
                               fontWeight: FontWeight.w600,
@@ -236,7 +235,7 @@ class MyPage extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 12),
                               child: Text(
                                 teaching3,
-                                style: GoogleFonts.inter(
+                                style: TextStyle(
                                   fontSize: 14,
                                   height: 1.6,
                                   fontWeight: FontWeight.w400,

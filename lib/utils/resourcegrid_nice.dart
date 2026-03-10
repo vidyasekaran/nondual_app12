@@ -64,7 +64,7 @@ class ResourceGrid extends StatelessWidget {
       {
         'icon': FontAwesomeIcons.amazon,
         'iconColor': const Color(0xFFFF9900), // Amazon orange
-        'label': 'Buy Book',
+        'label': 'Books By GM',
         'onTap': (BuildContext context) {
           showBooksBottomSheet(context);
         },
@@ -72,7 +72,7 @@ class ResourceGrid extends StatelessWidget {
       {
         'icon': FontAwesomeIcons.robot,
         'iconColor': const Color(0xFF10A37F), // AI/ChatGPT green
-        'label': 'GM GPT (AI)',
+        'label': 'GM GPT',
         'onTap': (BuildContext context) {
           showGmGptBottomSheet(context);
         },
@@ -82,16 +82,18 @@ class ResourceGrid extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardColor = isDark ? const Color(0xFF1E1B24) : Colors.white;
 
+    final isNarrow = MediaQuery.of(context).size.width < 400;
+
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.all(20),
       itemCount: resources.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: 20,
         mainAxisSpacing: 24,
-        childAspectRatio: 0.85,
+        childAspectRatio: isNarrow ? 0.75 : 0.85,
       ),
       itemBuilder: (context, index) {
         final item = resources[index];
@@ -99,6 +101,7 @@ class ResourceGrid extends StatelessWidget {
           icon: item['icon'],
           iconColor: item['iconColor'] as Color?,
           label: item['label'],
+          isNarrow: isNarrow,
           url: item['url'], // can be null
           cardColor: cardColor,
           isDark: isDark,
@@ -124,6 +127,7 @@ class _AnimatedResourceCard extends StatefulWidget {
   final String? url; // nullable
   final Color cardColor;
   final bool isDark;
+  final bool isNarrow;
   final VoidCallback onTap;
   final VoidCallback? onLongPress;
 
@@ -134,6 +138,7 @@ class _AnimatedResourceCard extends StatefulWidget {
     required this.url,
     required this.cardColor,
     required this.isDark,
+    this.isNarrow = false,
     required this.onTap,
     this.onLongPress,
   });
@@ -164,11 +169,13 @@ class _AnimatedResourceCardState extends State<_AnimatedResourceCard> {
           child: Column(
             children: [
               Expanded(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22),
-                    color: widget.cardColor,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(22),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(22),
+                      color: widget.cardColor,
                     gradient: _hover
                         ? LinearGradient(
                             colors: widget.isDark
@@ -199,24 +206,35 @@ class _AnimatedResourceCardState extends State<_AnimatedResourceCard> {
                           : Colors.grey.shade200,
                     ),
                   ),
-                  child: Center(
-                    child: FaIcon(
-                      widget.icon,
-                      size: 34,
-                      color: widget.iconColor ??
-                          (widget.isDark
-                              ? Colors.grey.shade300
-                              : Colors.grey.shade700),
+                    child: Padding(
+                      padding: EdgeInsets.all(
+                        MediaQuery.of(context).size.width < 400 ? 8 : 12,
+                      ),
+                      child: Center(
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: FaIcon(
+                            widget.icon,
+                            size: 34,
+                            color: widget.iconColor ??
+                                (widget.isDark
+                                    ? Colors.grey.shade300
+                                    : Colors.grey.shade700),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Text(
                 widget.label,
                 textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 12.5,
+                  fontSize: widget.isNarrow ? 10.5 : 12,
                   fontWeight: FontWeight.w600,
                   color: widget.isDark ? Colors.grey.shade200 : Colors.black87,
                 ),

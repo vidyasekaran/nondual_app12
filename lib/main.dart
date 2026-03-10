@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
+import 'package:lucide_icons/lucide_icons.dart';
 
 import 'package:http/http.dart' as http_parser;
 import 'package:image_picker/image_picker.dart';
 import 'package:nondual_app/screens/my_page.dart';
+import 'package:nondual_app/screens/question_answer.dart';
+import 'package:nondual_app/screens/splashpage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'screens/home_page.dart';
@@ -31,27 +34,10 @@ class GMTApp extends StatelessWidget {
     return MaterialApp(
       title: 'GM Teachings',
       debugShowCheckedModeBanner: false,
+
       routes: {'/admin': (context) => const AdminPage()},
 
-      /*theme: ThemeData(
-        primaryColor: const Color(0xFF6C63FF),
-
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6C63FF),
-        ).copyWith(secondary: const Color(0xFFFF6584)),
-
-        scaffoldBackgroundColor: const Color(0xFFF9F9F9),
-
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(
-            fontFamily: 'Times New Roman',
-            fontSize: 24,
-            height: 1.6,
-            color: Colors.black54,
-          ),
-        ),
-      ),*/
-      home: Container(
+      /*home: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -63,7 +49,8 @@ class GMTApp extends StatelessWidget {
           ),
         ),
         child: const MainScaffold(),
-      ),
+      ),*/
+      home: const SplashPage(),
     );
   }
 }
@@ -307,8 +294,53 @@ class _MainScaffoldState extends State<MainScaffold> {
     HomePage(aboutHeaderUrl: _aboutHeaderUrl),
     const MyPage(),
     const ResourceGrid(),
+    const QAPage(),
     const Center(child: Text("About Page - Version 2.1")),
   ];
+
+  Widget _buildNavIcon(
+    IconData icon,
+    List<Color> gradientColors, {
+    bool selected = false,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(7),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: LinearGradient(
+          colors: gradientColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: selected
+            ? [
+                BoxShadow(
+                  color: gradientColors.last.withOpacity(0.45),
+                  blurRadius: 14,
+                  offset: const Offset(0, 6),
+                ),
+              ]
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.10),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+        border: Border.all(
+          color: selected
+              ? Colors.white.withOpacity(0.75)
+              : Colors.white.withOpacity(0.25),
+          width: selected ? 1.2 : 0.8,
+        ),
+      ),
+      child: Icon(
+        icon,
+        size: 22,
+        color: selected ? Colors.white : Colors.white.withOpacity(0.92),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -374,32 +406,70 @@ class _MainScaffoldState extends State<MainScaffold> {
             labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
             destinations: [
               NavigationDestination(
-                icon: const Icon(Icons.home_outlined, color: Colors.white70),
-                selectedIcon: const Icon(Icons.home, color: Colors.white),
+                icon: _buildNavIcon(
+                  LucideIcons.home,
+                  const [Color(0xFF2BD9A7), Color(0xFF14B8A6)],
+                ),
+                selectedIcon: _buildNavIcon(
+                  LucideIcons.home,
+                  const [Color(0xFF2BD9A7), Color(0xFF14B8A6)],
+                  selected: true,
+                ),
                 label: 'Home',
               ),
               NavigationDestination(
-                icon: const Icon(Icons.school_outlined, color: Colors.white70),
-                selectedIcon: const Icon(Icons.school, color: Colors.white),
+                icon: _buildNavIcon(
+                  LucideIcons.flower2,
+                  const [Color(0xFFB97AFF), Color(0xFF7C3AED)],
+                ),
+                selectedIcon: _buildNavIcon(
+                  LucideIcons.flower2,
+                  const [Color(0xFFB97AFF), Color(0xFF7C3AED)],
+                  selected: true,
+                ),
                 label: 'Teachings',
               ),
+              
               NavigationDestination(
-                icon: const Icon(
-                  Icons.menu_book_outlined,
-                  color: Colors.white70,
+                icon: _buildNavIcon(
+                  LucideIcons.bookOpen,
+                  const [Color(0xFF60A5FA), Color(0xFF2563EB)],
                 ),
-                selectedIcon: const Icon(Icons.menu_book, color: Colors.white),
+                selectedIcon: _buildNavIcon(
+                  LucideIcons.bookOpen,
+                  const [Color(0xFF60A5FA), Color(0xFF2563EB)],
+                  selected: true,
+                ),
                 label: 'Resources',
+              ),
+              NavigationDestination(
+                icon: _buildNavIcon(
+                  LucideIcons.messagesSquare,
+                  const [Color(0xFFFFC857), Color(0xFFF97316)],
+                ),
+                selectedIcon: _buildNavIcon(
+                  LucideIcons.messagesSquare,
+                  const [Color(0xFFFFC857), Color(0xFFF97316)],
+                  selected: true,
+                ),
+                label: 'Q & A',
               ),
               /*              Holiday upload logic commented..*/
               NavigationDestination(
                 icon: GestureDetector(
                   //onDoubleTap: _pickAboutImage,
-                  child: const Icon(Icons.info_outline, color: Colors.white70),
+                  child: _buildNavIcon(
+                    LucideIcons.info,
+                    const [Color(0xFFFF7A8A), Color(0xFFEF4444)],
+                  ),
                 ),
                 selectedIcon: GestureDetector(
                   //onDoubleTap: _pickAboutImage,
-                  child: const Icon(Icons.info, color: Colors.white),
+                  child: _buildNavIcon(
+                    LucideIcons.info,
+                    const [Color(0xFFFF7A8A), Color(0xFFEF4444)],
+                    selected: true,
+                  ),
                 ),
                 label: 'About',
               ),

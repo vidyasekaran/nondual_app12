@@ -42,6 +42,7 @@ dependencies:
   audio_session: ^0.1.6
   video_player: ^2.8.2
   font_awesome_flutter: ^10.7.0
+  animated_text_kit: ^4.2.2
 
 
 
@@ -93,6 +94,10 @@ flutter:
     - assets/images/youtube.png
     - assets/images/seperator.png
     - assets/images/down.png
+    - assets/images/wallpaper1.jpg
+    - assets/images/wallpaper.jpg
+    - assets/images/wallpaper.png 
+    - assets/images/wallpaper1.png 
     - assets/audio/ilnoor-thoughts-v3.mp3
     - assets/audio/2025_04_10_11_55_31-v2.mp3
     - assets/text/coreteaching.txt
@@ -100,6 +105,18 @@ flutter:
     - assets/text/teaching1.txt
     - assets/text/teaching2.txt
     - assets/text/teaching3.txt
+    - assets/text/qa1.txt
+    - assets/text/qa2.txt
+    - assets/text/qa3.txt
+    - assets/text/qa4.txt
+    - assets/text/qa5.txt
+    - assets/text/qa6.txt
+    - assets/text/qa7.txt 
+    - assets/text/qa8.txt
+    - assets/text/qa9.txt
+    - assets/text/qa10.txt
+
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

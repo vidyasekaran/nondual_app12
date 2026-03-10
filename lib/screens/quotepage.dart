@@ -112,7 +112,7 @@ class _QuotePageState extends State<QuotePage> {
           Text(
             "Quote of the Day",
             style: GoogleFonts.inter(
-              fontSize: 20,
+              fontSize: 18,
               height: 1.5,
               fontWeight: FontWeight.bold,
               color: const Color(0xFF0D4F1C),
@@ -178,61 +178,4 @@ class _QuotePageState extends State<QuotePage> {
       ),
     );
   }
-}
-
-void _showImageViewer(
-  BuildContext context,
-  List<String> images,
-  int initialIndex,
-) {
-  showDialog(
-    context: context,
-    barrierColor: Colors.black,
-    builder: (_) => Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          PageView.builder(
-            controller: PageController(initialPage: initialIndex),
-            itemCount: images.length,
-            itemBuilder: (context, index) {
-              return Center(
-                child: InteractiveViewer(
-                  minScale: 0.8,
-                  maxScale: 4.0,
-                  child: Image.network(
-                    images[index],
-                    key: ValueKey(images[index]),
-                    fit: BoxFit.contain,
-                    gaplessPlayback: false,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return const Center(
-                        child: CircularProgressIndicator(color: Colors.white),
-                      );
-                    },
-                    errorBuilder: (_, __, ___) => const Icon(
-                      Icons.broken_image,
-                      color: Colors.white,
-                      size: 48,
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-
-          // Close button
-          Positioned(
-            top: 40,
-            right: 20,
-            child: IconButton(
-              icon: const Icon(Icons.close, color: Colors.white),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }
