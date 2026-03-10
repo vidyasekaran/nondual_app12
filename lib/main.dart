@@ -293,9 +293,9 @@ class _MainScaffoldState extends State<MainScaffold> {
   List<Widget> get _pages => [
     HomePage(aboutHeaderUrl: _aboutHeaderUrl),
     const MyPage(),
-    const ResourceGrid(),
     const QAPage(),
-    const Center(child: Text("About Page - Version 2.1")),
+    const ResourceGrid(),
+    //const Center(child: Text("About Page - Version 2.1")),
   ];
 
   Widget _buildNavIcon(
@@ -430,18 +430,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                 label: 'Teachings',
               ),
               
-              NavigationDestination(
-                icon: _buildNavIcon(
-                  LucideIcons.bookOpen,
-                  const [Color(0xFF60A5FA), Color(0xFF2563EB)],
-                ),
-                selectedIcon: _buildNavIcon(
-                  LucideIcons.bookOpen,
-                  const [Color(0xFF60A5FA), Color(0xFF2563EB)],
-                  selected: true,
-                ),
-                label: 'Resources',
-              ),
+              
               NavigationDestination(
                 icon: _buildNavIcon(
                   LucideIcons.messagesSquare,
@@ -454,25 +443,19 @@ class _MainScaffoldState extends State<MainScaffold> {
                 ),
                 label: 'Q & A',
               ),
-              /*              Holiday upload logic commented..*/
+                  
               NavigationDestination(
-                icon: GestureDetector(
-                  //onDoubleTap: _pickAboutImage,
-                  child: _buildNavIcon(
-                    LucideIcons.info,
-                    const [Color(0xFFFF7A8A), Color(0xFFEF4444)],
-                  ),
+                icon: _buildNavIcon(
+                  LucideIcons.bookOpen,
+                  const [Color(0xFF60A5FA), Color(0xFF2563EB)],
                 ),
-                selectedIcon: GestureDetector(
-                  //onDoubleTap: _pickAboutImage,
-                  child: _buildNavIcon(
-                    LucideIcons.info,
-                    const [Color(0xFFFF7A8A), Color(0xFFEF4444)],
-                    selected: true,
-                  ),
+                selectedIcon: _buildNavIcon(
+                  LucideIcons.bookOpen,
+                  const [Color(0xFF60A5FA), Color(0xFF2563EB)],
+                  selected: true,
                 ),
-                label: 'About',
-              ),
+                label: 'Resources',
+              ),          
             ],
           ),
         ),
