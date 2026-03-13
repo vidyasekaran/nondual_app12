@@ -312,18 +312,6 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           ListTile(
                             title: const Text(
-                              'Know the Unending Love beyond words.!',
-                            ),
-                            trailing: const Icon(Icons.play_arrow),
-                            onTap: () {
-                              openPodcast(
-                                "https://open.spotify.com/episode/4WOUCWZxz3FwUViAKClX4J",
-                              );
-                            },
-                          ),
-
-                          ListTile(
-                            title: const Text(
                               'Know the infinity of the Non Dual Reality.!',
                             ),
                             trailing: const Icon(Icons.play_arrow),
@@ -348,24 +336,36 @@ class _HomePageState extends State<HomePage> {
 
                           ListTile(
                             title: const Text(
-                              'Inwardly You are Already That and Always That.!',
+                              'I am Revealing the Highest Truth about Your Completeness, Wholeness Beyond space.!',
                             ),
                             trailing: const Icon(Icons.play_arrow),
                             onTap: () {
                               openPodcast(
-                                "https://open.spotify.com/episode/1RhI9ulmhRW4tlc6OcNBGB",
+                                "https://open.spotify.com/episode/0gcxnKK1ncpw9pA62a1aGb",
                               );
                             },
                           ),
 
                           ListTile(
                             title: const Text(
-                              'Settle Inwardly Where You are Already.!',
+                              'Know the Unending Love beyond words.!',
                             ),
                             trailing: const Icon(Icons.play_arrow),
                             onTap: () {
                               openPodcast(
-                                "https://open.spotify.com/episode/53TA6W7PxRZW22tFO4Aj4A",
+                                "https://open.spotify.com/episode/4WOUCWZxz3FwUViAKClX4J",
+                              );
+                            },
+                          ),
+
+                          ListTile(
+                            title: const Text(
+                              'Inwardly You are Already That and Always That.!',
+                            ),
+                            trailing: const Icon(Icons.play_arrow),
+                            onTap: () {
+                              openPodcast(
+                                "https://open.spotify.com/episode/1RhI9ulmhRW4tlc6OcNBGB",
                               );
                             },
                           ),
@@ -551,7 +551,9 @@ Future<List<String>> fetchLocalQuoteAssets() async {
       .where((key) => key.startsWith('assets/images/quotes/'))
       .where(
         (key) =>
-            key.endsWith('.jpeg') || key.endsWith('.jpg') || key.endsWith('.png'),
+            key.endsWith('.jpeg') ||
+            key.endsWith('.jpg') ||
+            key.endsWith('.png'),
       )
       .toList();
   assets.sort();
@@ -567,7 +569,9 @@ Future<List<String>> _getLocalQuoteAssetsCached() =>
 
 String? _mapNetworkUrlToLocalAsset(String url, List<String> localAssets) {
   final uri = Uri.tryParse(url);
-  final last = uri?.pathSegments.isNotEmpty == true ? uri!.pathSegments.last : '';
+  final last = uri?.pathSegments.isNotEmpty == true
+      ? uri!.pathSegments.last
+      : '';
   if (last.isEmpty) return null;
 
   // If Supabase file is `.../allquotes/1.jpeg`, try to match `assets/images/quotes/1.jpeg`
@@ -741,10 +745,7 @@ void _showImageViewer(
                 child: InteractiveViewer(
                   minScale: 0.8,
                   maxScale: 4.0,
-                  child: _quoteImageWidget(
-                    images[index],
-                    fit: BoxFit.contain,
-                  ),
+                  child: _quoteImageWidget(images[index], fit: BoxFit.contain),
                 ),
               );
             },

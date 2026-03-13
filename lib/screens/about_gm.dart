@@ -128,7 +128,7 @@ class EventCard extends StatelessWidget {
               final aboutGM = snapshot.data!;
 
               const imgUrl =
-                  'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/quote/GM_Photo.png';
+                  'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/quote/GM-violet.png';
 
               // const imgUrl = 'assets/images/GM_Photo.png';
 
@@ -154,7 +154,7 @@ class EventCard extends StatelessWidget {
                                   },
                               errorBuilder: (context, error, stackTrace) {
                                 return Image.asset(
-                                  'assets/images/GM_Photo.png',
+                                  'assets/images/GM-violet.png',
                                   fit: BoxFit.cover,
                                 );
                               },

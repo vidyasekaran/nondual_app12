@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     // Navigate after 3 seconds
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const MainScaffold()),
@@ -48,24 +48,26 @@ class _SplashPageState extends State<SplashPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 // First Line (Static)
-                Text(
-                  "GM’s Nondual Teachings",
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 32,
-                    letterSpacing: 1.5,
-                    color: const Color.fromRGBO(103, 11, 173, 1),
+                Center(
+                  child: Text(
+                    "GM’s Nondual Teachings",
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 32,
+                      letterSpacing: 1.5,
+                      color: const Color.fromRGBO(103, 11, 173, 1),
+                    ),
                   ),
                 ),
 
                 const SizedBox(height: 20),
 
-                // Second Line (Letter by Letter)
                 AnimatedTextKit(
                   isRepeatingAnimation: false,
                   animatedTexts: [
                     TypewriterAnimatedText(
-                      "You Are That...",
-                      speed: const Duration(milliseconds: 120),
+                      "You Are That.!",
+                      speed: const Duration(milliseconds: 60),
+                      cursor: "", // removes the blinking cursor
                       textStyle: GoogleFonts.playfairDisplay(
                         fontSize: 28,
                         fontWeight: FontWeight.w500,

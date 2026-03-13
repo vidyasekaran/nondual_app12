@@ -26,7 +26,7 @@ class CoreTeachings extends StatelessWidget {
           }
 
           const imgUrl =
-              'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/quote/GM_Photo.jpeg';
+              'https://rvevlngiswoduyxwetsb.supabase.co/storage/v1/object/public/quote/quote/GM-violet.png';
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(24.0),

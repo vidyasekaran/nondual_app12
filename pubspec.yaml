@@ -47,13 +47,9 @@ dependencies:
 
 
 fonts:
-    - family: PlayfairDisplay
+    - family: Emoji
       fonts:
-        - asset: assets/fonts/PlayfairDisplay-Regular.ttf
-
-    - family: Times New Roman
-      fonts:
-        - asset: assets/fonts/TimesNewRoman.ttf
+        - asset: assets/fonts/NotoColorEmoji-Regular.ttf
 
 
 
@@ -71,7 +67,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/GM_Photo.png"
+  image_path: "assets/images/GM-violet.png"
   #adaptive_icon_background: "#FFFFFF"
   #adaptive_icon_foreground: "assets/icon/app_icon_foreground.png"
 
