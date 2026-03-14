@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../utils/quote_refresh_notifier.dart';
 
 class TodaysQuote extends StatefulWidget {
   const TodaysQuote({super.key});
@@ -13,11 +17,21 @@ class _TodaysQuoteState extends State<TodaysQuote> {
   String? imageUrl;
   bool isLoading = true;
   final noQuoteUrl = 'assets/images/quotes/1.jpeg';
+  StreamSubscription<void>? _refreshSub;
 
   @override
   void initState() {
     super.initState();
     _loadTodayQuote();
+    _refreshSub = quoteRefreshNotifier.stream.listen((_) {
+      if (mounted) _loadTodayQuote();
+    });
+  }
+
+  @override
+  void dispose() {
+    _refreshSub?.cancel();
+    super.dispose();
   }
   /*
   Future<void> _loadTodayQuote() async {

@@ -11,6 +11,7 @@ import 'package:nondual_app/screens/splashpage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'screens/home_page.dart';
+import 'utils/quote_refresh_notifier.dart';
 import 'utils/resourcegrid_nice.dart';
 import 'dart:typed_data';
 
@@ -149,6 +150,8 @@ class _AdminPageState extends State<AdminPage> {
       setState(() {
         uploadedUrl = url;
       });
+
+      quoteRefreshNotifier.add(null);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
