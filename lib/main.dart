@@ -38,19 +38,6 @@ class GMTApp extends StatelessWidget {
 
       routes: {'/admin': (context) => const AdminPage()},
 
-      /*home: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFFE8F5E9), // light green background color
-              Color(0xFFE1F5E3), // slightly different light green tone
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: const MainScaffold(),
-      ),*/
       home: const SplashPage(),
     );
   }
@@ -409,56 +396,51 @@ class _MainScaffoldState extends State<MainScaffold> {
             labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
             destinations: [
               NavigationDestination(
-                icon: _buildNavIcon(
-                  LucideIcons.home,
-                  const [Color(0xFF2BD9A7), Color(0xFF14B8A6)],
-                ),
-                selectedIcon: _buildNavIcon(
-                  LucideIcons.home,
-                  const [Color(0xFF2BD9A7), Color(0xFF14B8A6)],
-                  selected: true,
-                ),
+                icon: _buildNavIcon(LucideIcons.home, const [
+                  Color(0xFF2BD9A7),
+                  Color(0xFF14B8A6),
+                ]),
+                selectedIcon: _buildNavIcon(LucideIcons.home, const [
+                  Color(0xFF2BD9A7),
+                  Color(0xFF14B8A6),
+                ], selected: true),
                 label: 'Home',
               ),
               NavigationDestination(
-                icon: _buildNavIcon(
-                  LucideIcons.flower2,
-                  const [Color(0xFFB97AFF), Color(0xFF7C3AED)],
-                ),
-                selectedIcon: _buildNavIcon(
-                  LucideIcons.flower2,
-                  const [Color(0xFFB97AFF), Color(0xFF7C3AED)],
-                  selected: true,
-                ),
+                icon: _buildNavIcon(LucideIcons.flower2, const [
+                  Color(0xFFB97AFF),
+                  Color(0xFF7C3AED),
+                ]),
+                selectedIcon: _buildNavIcon(LucideIcons.flower2, const [
+                  Color(0xFFB97AFF),
+                  Color(0xFF7C3AED),
+                ], selected: true),
                 label: 'Teachings',
               ),
-              
-              
+
               NavigationDestination(
-                icon: _buildNavIcon(
-                  LucideIcons.messagesSquare,
-                  const [Color(0xFFFFC857), Color(0xFFF97316)],
-                ),
-                selectedIcon: _buildNavIcon(
-                  LucideIcons.messagesSquare,
-                  const [Color(0xFFFFC857), Color(0xFFF97316)],
-                  selected: true,
-                ),
+                icon: _buildNavIcon(LucideIcons.messagesSquare, const [
+                  Color(0xFFFFC857),
+                  Color(0xFFF97316),
+                ]),
+                selectedIcon: _buildNavIcon(LucideIcons.messagesSquare, const [
+                  Color(0xFFFFC857),
+                  Color(0xFFF97316),
+                ], selected: true),
                 label: 'Q & A',
               ),
-                  
+
               NavigationDestination(
-                icon: _buildNavIcon(
-                  LucideIcons.bookOpen,
-                  const [Color(0xFF60A5FA), Color(0xFF2563EB)],
-                ),
-                selectedIcon: _buildNavIcon(
-                  LucideIcons.bookOpen,
-                  const [Color(0xFF60A5FA), Color(0xFF2563EB)],
-                  selected: true,
-                ),
+                icon: _buildNavIcon(LucideIcons.bookOpen, const [
+                  Color(0xFF60A5FA),
+                  Color(0xFF2563EB),
+                ]),
+                selectedIcon: _buildNavIcon(LucideIcons.bookOpen, const [
+                  Color(0xFF60A5FA),
+                  Color(0xFF2563EB),
+                ], selected: true),
                 label: 'Resources',
-              ),          
+              ),
             ],
           ),
         ),

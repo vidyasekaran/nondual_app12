@@ -15,7 +15,7 @@ final List<Link> youtubeLinks = [
     title: 'GM Teachings – Tamil',
     url: 'https://www.youtube.com/@tamilteachingsofgm',
   ),
-  Link(title: 'NonDual Songs', url: 'https://www.youtube.com/@GMNonDualSongs'),
+  // Link(title: 'NonDual Songs', url: 'https://www.youtube.com/@GMNonDualSongs'),
   Link(
     title: 'Short Teachings',
     url: 'https://www.youtube.com/@teachingsofgm/shorts',

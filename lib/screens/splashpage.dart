@@ -3,6 +3,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nondual_app/main.dart';
 import 'package:nondual_app/utils/loadingIndicator.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -15,7 +16,15 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    _init();
+  }
 
+  Future<void> _init() async {
+    await _checkForUpdate();
+    await _navigateNext();
+  }
+
+  Future<void> _navigateNext() async {
     // Navigate after 3 seconds
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
@@ -23,6 +32,26 @@ class _SplashPageState extends State<SplashPage> {
         MaterialPageRoute(builder: (_) => const MainScaffold()),
       );
     });
+  }
+
+  Future<void> _checkForUpdate() async {
+    try {
+      final updateInfo = await InAppUpdate.checkForUpdate();
+
+      if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+        // 🔴 Only trigger immediate update if allowed
+        if (updateInfo.immediateUpdateAllowed) {
+          await InAppUpdate.performImmediateUpdate();
+        }
+        // 🟡 Optional: fallback to flexible update
+        else if (updateInfo.flexibleUpdateAllowed) {
+          await InAppUpdate.startFlexibleUpdate();
+          await InAppUpdate.completeFlexibleUpdate();
+        }
+      }
+    } catch (e) {
+      debugPrint("Update check failed: $e");
+    }
   }
 
   Widget build(BuildContext context) {
@@ -84,48 +113,4 @@ class _SplashPageState extends State<SplashPage> {
       ),
     );
   }
-
-  /*
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-
-          children: [
-            // First Line (Static)
-            const Text(
-              "GM’s Nondual Teachings",
-              style: TextStyle(
-                fontSize: 32,
-                letterSpacing: 1.5,
-                color: Colors.black54,
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Second Line (Letter by Letter)
-            AnimatedTextKit(
-              isRepeatingAnimation: false,
-              animatedTexts: [
-                TypewriterAnimatedText(
-                  "You Are That",
-                  speed: const Duration(milliseconds: 120),
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                    letterSpacing: 2,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }*/
 }
