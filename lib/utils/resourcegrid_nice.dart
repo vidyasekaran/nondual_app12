@@ -5,8 +5,8 @@ import 'package:nondual_app/data/youtube_links.dart';
 import 'package:nondual_app/model/gm_gpt_model.dart';
 import 'package:nondual_app/utils/showBookLinksBottomSheet.dart';
 import 'package:nondual_app/utils/showSocialMediaBottomSheet.dart';
-import 'package:nondual_app/utils/showWebLinksBottomSheet.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../data/web_links.dart';
 
 class ResourceGrid extends StatelessWidget {
   const ResourceGrid({super.key});
@@ -176,36 +176,36 @@ class _AnimatedResourceCardState extends State<_AnimatedResourceCard> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(22),
                       color: widget.cardColor,
-                    gradient: _hover
-                        ? LinearGradient(
-                            colors: widget.isDark
-                                ? [
-                                    const Color(0xFF2A2633),
-                                    const Color(0xFF19161D),
-                                  ]
-                                : [
-                                    const Color(0xFFF9FAFB),
-                                    const Color(0xFFFFFFFF),
-                                  ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          )
-                        : null,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(
-                          _hover ? 0.15 : 0.05,
-                        ), // Glow when hovered
-                        blurRadius: _hover ? 14 : 6,
-                        offset: const Offset(0, 4),
+                      gradient: _hover
+                          ? LinearGradient(
+                              colors: widget.isDark
+                                  ? [
+                                      const Color(0xFF2A2633),
+                                      const Color(0xFF19161D),
+                                    ]
+                                  : [
+                                      const Color(0xFFF9FAFB),
+                                      const Color(0xFFFFFFFF),
+                                    ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            )
+                          : null,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(
+                            _hover ? 0.15 : 0.05,
+                          ), // Glow when hovered
+                          blurRadius: _hover ? 14 : 6,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                      border: Border.all(
+                        color: widget.isDark
+                            ? Colors.white10
+                            : Colors.grey.shade200,
                       ),
-                    ],
-                    border: Border.all(
-                      color: widget.isDark
-                          ? Colors.white10
-                          : Colors.grey.shade200,
                     ),
-                  ),
                     child: Padding(
                       padding: EdgeInsets.all(
                         MediaQuery.of(context).size.width < 400 ? 8 : 12,
@@ -216,7 +216,8 @@ class _AnimatedResourceCardState extends State<_AnimatedResourceCard> {
                           child: FaIcon(
                             widget.icon,
                             size: 34,
-                            color: widget.iconColor ??
+                            color:
+                                widget.iconColor ??
                                 (widget.isDark
                                     ? Colors.grey.shade300
                                     : Colors.grey.shade700),
@@ -255,33 +256,35 @@ void showSpotifyBottomSheet(BuildContext context) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (_) {
-      return Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "Spotify Resources",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Spotify Resources",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
 
-            ...spotifyLinks.map((item) {
-              return ListTile(
-                leading: const Icon(
-                  Icons.music_note_outlined,
-                  color: Colors.green,
-                ),
-                title: Text(item.title),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () async {
-                  Navigator.pop(context);
-                  final url = Uri.parse(item.url);
-                  await launchUrl(url, mode: LaunchMode.externalApplication);
-                },
-              );
-            }).toList(),
-          ],
+              ...spotifyLinks.map((item) {
+                return ListTile(
+                  leading: const Icon(
+                    Icons.music_note_outlined,
+                    color: Colors.green,
+                  ),
+                  title: Text(item.title),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final url = Uri.parse(item.url);
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                  },
+                );
+              }).toList(),
+            ],
+          ),
         ),
       );
     },
@@ -296,33 +299,35 @@ void showYoutubeBottomSheet(BuildContext context) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (_) {
-      return Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "YouTube Resources",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "YouTube Resources",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
 
-            ...youtubeLinks.map((item) {
-              return ListTile(
-                leading: const Icon(
-                  Icons.play_circle_outline,
-                  color: Colors.red,
-                ),
-                title: Text(item.title),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () async {
-                  Navigator.pop(context);
-                  final url = Uri.parse(item.url);
-                  await launchUrl(url, mode: LaunchMode.externalApplication);
-                },
-              );
-            }).toList(),
-          ],
+              ...youtubeLinks.map((item) {
+                return ListTile(
+                  leading: const Icon(
+                    Icons.play_circle_outline,
+                    color: Colors.red,
+                  ),
+                  title: Text(item.title),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final url = Uri.parse(item.url);
+                    await launchUrl(url, mode: LaunchMode.externalApplication);
+                  },
+                );
+              }).toList(),
+            ],
+          ),
         ),
       );
     },
@@ -337,28 +342,70 @@ void showBooksBottomSheet(BuildContext context) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (_) {
-      return Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "Select a Book",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            ...books.map((book) {
-              return ListTile(
-                leading: Image.asset(book.image, width: 40),
-                title: Text(book.title),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () {
-                  Navigator.pop(context);
-                  showBookLinksBottomSheet(context, book);
-                },
-              );
-            }).toList(),
-          ],
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Select a Book",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+              ...books.map((book) {
+                return ListTile(
+                  leading: Image.asset(book.image, width: 40),
+                  title: Text(book.title),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () {
+                    Navigator.pop(context);
+                    showBookLinksBottomSheet(context, book);
+                  },
+                );
+              }).toList(),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+void showWebLinksBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (_) {
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Website & Q&A",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+
+              ...webLinks.map((item) {
+                return ListTile(
+                  leading: const Icon(Icons.public),
+                  title: Text(item.title),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final uri = Uri.parse(item.url);
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  },
+                );
+              }).toList(),
+            ],
+          ),
         ),
       );
     },
@@ -373,49 +420,43 @@ void showGmGptBottomSheet(BuildContext context) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (_) {
-      return Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "GM GPT – AI Guidance",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "GM GPT – AI Guidance",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
 
-            const SizedBox(height: 8),
+              const SizedBox(height: 8),
 
-            const Text(
-              "This opens a personal AI conversation (not a group chat).",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.black54),
-            ),
+              const Text(
+                "This opens a personal AI conversation (not a group chat).",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, color: Colors.black54),
+              ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            ...gmGptLinks.map((item) {
-              return ListTile(
-                leading: Icon(item.icon, color: item.color),
-                title: Text(item.title),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () async {
-                  Navigator.pop(context);
-                  final uri = Uri.parse(item.url);
-                  await launchUrl(uri, mode: LaunchMode.externalApplication);
-                },
-              );
-            }).toList(),
-          ],
+              ...gmGptLinks.map((item) {
+                return ListTile(
+                  leading: Icon(item.icon, color: item.color),
+                  title: Text(item.title),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final uri = Uri.parse(item.url);
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  },
+                );
+              }).toList(),
+            ],
+          ),
         ),
       );
     },
   );
-}
-
-Future<void> openWhatsAppGroup(String inviteLink) async {
-  final uri = Uri.parse(inviteLink);
-
-  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-    throw 'Could not open WhatsApp group';
-  }
 }

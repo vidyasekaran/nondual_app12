@@ -10,30 +10,32 @@ void showWebLinksBottomSheet(BuildContext context) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (_) {
-      return Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "Website & Q&A",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Website & Q&A123",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
 
-            ...webLinks.map((item) {
-              return ListTile(
-                leading: const Icon(Icons.public),
-                title: Text(item.title),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () async {
-                  Navigator.pop(context);
-                  final uri = Uri.parse(item.url);
-                  await launchUrl(uri, mode: LaunchMode.externalApplication);
-                },
-              );
-            }).toList(),
-          ],
+              ...webLinks.map((item) {
+                return ListTile(
+                  leading: const Icon(Icons.public),
+                  title: Text(item.title),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final uri = Uri.parse(item.url);
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  },
+                );
+              }).toList(),
+            ],
+          ),
         ),
       );
     },

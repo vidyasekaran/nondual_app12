@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1043130529730:android:bf669a09268f8c3ab2485b",
         "android_client_info": {
-          "package_name": "com.example.gm_nondual_teaching"
+          "package_name": "com.gmteachings.nondualapp"
         }
       },
       "oauth_client": [],
@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1043130529730:android:ac053bcd3b0203deb2485b",
         "android_client_info": {
-          "package_name": "com.example.nondual_app"
+          "package_name": "com.gmteachings.nondualapp"
         }
       },
       "oauth_client": [],
