@@ -382,27 +382,36 @@ void showWebLinksBottomSheet(BuildContext context) {
 
     builder: (_) {
       final mediaQuery = MediaQuery.of(context);
+      final width = mediaQuery.size.width;
+      final scale = (width / 375).clamp(0.85, 1.1);
+
       return MediaQuery(
-        data: mediaQuery.copyWith(
-          textScaleFactor: mediaQuery.textScaleFactor.clamp(0.9, 1.2),
-        ),
+        data: mediaQuery.copyWith(textScaler: const TextScaler.linear(1.0)),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   "Website & Q&A",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 18 * scale,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 16),
 
                 ...webLinks.map((item) {
                   return ListTile(
                     leading: const Icon(Icons.public),
-                    title: Text(item.title),
+                    title: Text(
+                      item.title,
+                      textScaler: const TextScaler.linear(1.0),
+                      style: TextStyle(fontSize: 14 * scale),
+                    ),
                     trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+
                     onTap: () async {
                       Navigator.pop(context);
                       final uri = Uri.parse(item.url);
@@ -431,26 +440,28 @@ void showGmGptBottomSheet(BuildContext context) {
     ),
     builder: (_) {
       final mediaQuery = MediaQuery.of(context);
+      final width = mediaQuery.size.width;
+      final scale = (width / 375).clamp(0.85, 1.1);
       return MediaQuery(
-        data: mediaQuery.copyWith(
-          textScaleFactor: mediaQuery.textScaleFactor.clamp(0.9, 1.2),
-        ),
+        data: mediaQuery.copyWith(textScaler: const TextScaler.linear(1.0)),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   "GM GPT – AI Guidance",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  textScaler: const TextScaler.linear(1.0),
+                  style: TextStyle(fontSize: 18 * scale),
                 ),
 
                 const SizedBox(height: 8),
 
                 const Text(
-                  "This opens a personal AI conversation (not a group chat).",
+                  "This opens a personal AI conversation with GM GPT",
                   textAlign: TextAlign.center,
+                  textScaler: const TextScaler.linear(1.0),
                   style: TextStyle(fontSize: 14, color: Colors.black54),
                 ),
 
@@ -459,7 +470,11 @@ void showGmGptBottomSheet(BuildContext context) {
                 ...gmGptLinks.map((item) {
                   return ListTile(
                     leading: Icon(item.icon, color: item.color),
-                    title: Text(item.title),
+                    title: Text(
+                      item.title,
+                      textScaler: const TextScaler.linear(1.0),
+                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                    ),
                     trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                     onTap: () async {
                       Navigator.pop(context);
