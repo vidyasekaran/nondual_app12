@@ -17,39 +17,49 @@ class QAPage extends StatelessWidget {
     return await rootBundle.loadString('assets/text/qa3.txt');
   }
 
-    Future<String> loadQA4() async {
+  Future<String> loadQA4() async {
     return await rootBundle.loadString('assets/text/qa4.txt');
   }
 
-
-    Future<String> loadQA5() async {
+  Future<String> loadQA5() async {
     return await rootBundle.loadString('assets/text/qa5.txt');
   }
 
-    Future<String> loadQA6() async {
+  Future<String> loadQA6() async {
     return await rootBundle.loadString('assets/text/qa6.txt');
   }
-    Future<String> loadQA7() async {
+
+  Future<String> loadQA7() async {
     return await rootBundle.loadString('assets/text/qa7.txt');
   }
 
-    Future<String> loadQA8() async {
+  Future<String> loadQA8() async {
     return await rootBundle.loadString('assets/text/qa8.txt');
   }
 
-    Future<String> loadQA9() async {
+  Future<String> loadQA9() async {
     return await rootBundle.loadString('assets/text/qa9.txt');
   }
 
-    Future<String> loadQA10() async {
+  Future<String> loadQA10() async {
     return await rootBundle.loadString('assets/text/qa10.txt');
   }
-
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.wait([loadQA1(), loadQA2(), loadQA3(), loadQA4(), loadQA5(), loadQA6(), loadQA7(), loadQA8(), loadQA9(), loadQA10()]),
+      future: Future.wait([
+        loadQA1(),
+        loadQA2(),
+        loadQA3(),
+        loadQA4(),
+        loadQA5(),
+        loadQA6(),
+        loadQA7(),
+        loadQA8(),
+        loadQA9(),
+        loadQA10(),
+      ]),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
@@ -167,7 +177,6 @@ class QAPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                         
               ],
             ),
           ),
@@ -177,61 +186,44 @@ class QAPage extends StatelessWidget {
   }
 }
 
-
-
 Widget buildTile(String title, String content) {
-                      return ExpansionTile(
-                          trailing: Image.asset(
-                            "assets/images/down.png",
-                            width: 28,
-                            height: 28,
-                          ),
+  return ExpansionTile(
+    trailing: Image.asset("assets/images/down.png", width: 28, height: 28),
 
-                          tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          textColor: const Color(
-                            0xFF0D4F1C,
-                          ), // Dark green for better readability
-                          iconColor: const Color(0xFF0D4F1C),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          collapsedShape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          title: Text(
-                            title,
-                            style: TextStyle(
-                              fontSize: 15,
-                              height: 1.5,
-                              fontWeight: FontWeight.w600,
-                              color: const Color(
-                                0xFF0D4F1C,
-                              ), // Dark green for better readability
-                              letterSpacing: 0.3,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
+    tilePadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    textColor: const Color(0xFF0D4F1C), // Dark green for better readability
+    iconColor: const Color(0xFF0D4F1C),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    collapsedShape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+    title: Text(
+      title,
+      style: TextStyle(
+        fontSize: 15,
+        height: 1.5,
+        fontWeight: FontWeight.w600,
+        color: const Color(0xFF0D4F1C), // Dark green for better readability
+        letterSpacing: 0.3,
+      ),
+      textAlign: TextAlign.left,
+    ),
 
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 12),
-                              child: Text(
-                                content,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  height: 1.6,
-                                  fontWeight: FontWeight.w400,
-                                  color: const Color(
-                                    0xFF0D4F1C,
-                                  ), // Dark green for better readability
-                                  letterSpacing: 0.2,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ],
-                        );
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Text(
+          content,
+          style: TextStyle(
+            fontSize: 14,
+            height: 1.6,
+            fontWeight: FontWeight.w400,
+            color: const Color(0xFF0D4F1C), // Dark green for better readability
+            letterSpacing: 0.2,
+          ),
+          textAlign: TextAlign.left,
+        ),
+      ),
+    ],
+  );
 }
