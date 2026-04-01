@@ -458,11 +458,11 @@ void showGmGptBottomSheet(BuildContext context) {
 
                 const SizedBox(height: 8),
 
-                const Text(
+                Text(
                   "This opens a personal AI conversation with GM GPT",
                   textAlign: TextAlign.center,
                   textScaler: const TextScaler.linear(1.0),
-                  style: TextStyle(fontSize: 14, color: Colors.black54),
+                  style: TextStyle(fontSize: 14 * scale, color: Colors.black54),
                 ),
 
                 const SizedBox(height: 16),
@@ -473,7 +473,10 @@ void showGmGptBottomSheet(BuildContext context) {
                     title: Text(
                       item.title,
                       textScaler: const TextScaler.linear(1.0),
-                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                      style: TextStyle(
+                        fontSize: 14 * scale,
+                        color: Colors.black54,
+                      ),
                     ),
                     trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                     onTap: () async {
