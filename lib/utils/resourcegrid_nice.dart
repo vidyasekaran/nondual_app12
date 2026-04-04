@@ -381,49 +381,49 @@ void showWebLinksBottomSheet(BuildContext context) {
     ),
 
     builder: (_) {
-      final mediaQuery = MediaQuery.of(context);
-      final width = mediaQuery.size.width;
-      final scale = (width / 375).clamp(0.85, 1.1);
+      //final mediaQuery = MediaQuery.of(context);
+      // final width = mediaQuery.size.width;
+      // final scale = (width / 375).clamp(0.85, 1.1);
 
-      return MediaQuery(
-        data: mediaQuery.copyWith(textScaler: const TextScaler.linear(1.0)),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Website & Q&A",
-                  style: TextStyle(
-                    fontSize: 18 * scale,
-                    fontWeight: FontWeight.bold,
-                  ),
+      //return MediaQuery(
+      //  data: mediaQuery.copyWith(textScaler: const TextScaler.linear(1.0)),
+      //  child: SafeArea(
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Website & Q&A",
+                style: TextStyle(
+                  //fontSize: 18 * scale,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 16),
+              ),
+              const SizedBox(height: 16),
 
-                ...webLinks.map((item) {
-                  return ListTile(
-                    leading: const Icon(Icons.public),
-                    title: Text(
-                      item.title,
-                      textScaler: const TextScaler.linear(1.0),
-                      style: TextStyle(fontSize: 14 * scale),
-                    ),
-                    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              ...webLinks.map((item) {
+                return ListTile(
+                  leading: const Icon(Icons.public),
+                  title: Text(
+                    item.title,
+                    textScaler: const TextScaler.linear(1.0),
+                    style: TextStyle(fontSize: 14),
+                  ),
 
-                    onTap: () async {
-                      Navigator.pop(context);
-                      final uri = Uri.parse(item.url);
-                      await launchUrl(
-                        uri,
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
-                  );
-                }).toList(),
-              ],
-            ),
+                  // style: TextStyle(fontSize: 14 * scale),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final uri = Uri.parse(item.url);
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  },
+                );
+              }).toList(),
+            ],
           ),
         ),
       );
@@ -439,58 +439,51 @@ void showGmGptBottomSheet(BuildContext context) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (_) {
-      final mediaQuery = MediaQuery.of(context);
+      /* final mediaQuery = MediaQuery.of(context);
       final width = mediaQuery.size.width;
       final scale = (width / 375).clamp(0.85, 1.1);
       return MediaQuery(
-        data: mediaQuery.copyWith(textScaler: const TextScaler.linear(1.0)),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "GM GPT – AI Guidance",
-                  textScaler: const TextScaler.linear(1.0),
-                  style: TextStyle(fontSize: 18 * scale),
-                ),
+        data: mediaQuery.copyWith(textScaler: const TextScaler.linear(1.0)),*/
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "GM GPT – AI Guidance",
+                textScaler: const TextScaler.linear(1.0),
+                style: TextStyle(fontSize: 18),
+              ),
 
-                const SizedBox(height: 8),
+              const SizedBox(height: 8),
 
-                Text(
-                  "This opens a personal AI conversation with GM GPT",
-                  textAlign: TextAlign.center,
-                  textScaler: const TextScaler.linear(1.0),
-                  style: TextStyle(fontSize: 14 * scale, color: Colors.black54),
-                ),
+              Text(
+                "This opens a personal AI conversation with GM GPT",
+                textAlign: TextAlign.center,
+                textScaler: const TextScaler.linear(1.0),
+                style: TextStyle(fontSize: 14, color: Colors.black54),
+              ),
 
-                const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-                ...gmGptLinks.map((item) {
-                  return ListTile(
-                    leading: Icon(item.icon, color: item.color),
-                    title: Text(
-                      item.title,
-                      textScaler: const TextScaler.linear(1.0),
-                      style: TextStyle(
-                        fontSize: 14 * scale,
-                        color: Colors.black54,
-                      ),
-                    ),
-                    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                    onTap: () async {
-                      Navigator.pop(context);
-                      final uri = Uri.parse(item.url);
-                      await launchUrl(
-                        uri,
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
-                  );
-                }).toList(),
-              ],
-            ),
+              ...gmGptLinks.map((item) {
+                return ListTile(
+                  leading: Icon(item.icon, color: item.color),
+                  title: Text(
+                    item.title,
+                    textScaler: const TextScaler.linear(1.0),
+                    style: TextStyle(fontSize: 14, color: Colors.black54),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    final uri = Uri.parse(item.url);
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  },
+                );
+              }).toList(),
+            ],
           ),
         ),
       );
