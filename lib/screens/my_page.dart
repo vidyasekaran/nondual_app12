@@ -18,8 +18,6 @@ class MyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scale = (MediaQuery.of(context).size.width / 375).clamp(0.9, 1.2);
-
     return FutureBuilder(
       future: Future.wait([loadTeaching1(), loadTeaching2(), loadTeaching3()]),
       builder: (context, snapshot) {
@@ -69,14 +67,13 @@ class MyPage extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           "🏵️ Core Teachings of GM",
                           style: TextStyle(
-                            fontSize: 18 * scale,
+                            fontSize: 18,
                             height: 1.2,
                             fontWeight: FontWeight.bold,
                             color: const Color(
